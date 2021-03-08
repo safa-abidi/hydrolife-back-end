@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 //heritage
@@ -25,6 +27,13 @@ public class Service {
 
     //relations
     @ManyToOne
-    @JoinColumn(name="emailCentre") //foreign key
+    @JoinColumn(name="id_centre") //foreign key
     private Centre centre;
+
+    @OneToMany(mappedBy = "service")
+    Set<PromoService> promoServices = new HashSet<PromoService>();
+
+    @ManyToOne
+    @JoinColumn(name="id_reservation") //foreign key
+    private Reservation reservation;
 }

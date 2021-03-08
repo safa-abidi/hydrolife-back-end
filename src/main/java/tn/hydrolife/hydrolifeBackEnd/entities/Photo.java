@@ -24,6 +24,6 @@ public class Photo {
 
     //relations
     @ManyToOne
-    @JoinColumn(name="emailCentre") //foreign key
+    @JoinColumn(name="id_centre") //foreign key
     private Centre centre;
 }

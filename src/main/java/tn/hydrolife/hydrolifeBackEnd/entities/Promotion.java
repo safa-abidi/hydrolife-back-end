@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -25,6 +27,9 @@ public class Promotion {
 
     //relations
     @ManyToOne
-    @JoinColumn(name="emailCentre") //foreign key
+    @JoinColumn(name="id_centre") //foreign key
     private Centre centre;
+
+    @OneToMany(mappedBy = "promotion")
+    Set<PromoService> promoServices = new HashSet<PromoService>();
 }
