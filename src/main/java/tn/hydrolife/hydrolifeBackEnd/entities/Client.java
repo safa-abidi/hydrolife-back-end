@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @DiscriminatorValue("client")
 
@@ -17,4 +20,8 @@ import java.util.Date;
 public class Client extends User {
     private String prenom;
     private Date dateNaissance;
+
+    //relations
+    @OneToMany(mappedBy="client")
+    Set<Reservation> reservations = new HashSet<Reservation>();
 }

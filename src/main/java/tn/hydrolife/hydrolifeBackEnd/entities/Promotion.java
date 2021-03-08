@@ -22,4 +22,9 @@ public class Promotion {
     private String description_promo;
     private Date date_debut_promo;
     private Date date_fin_promo;
+
+    //relations
+    @ManyToOne
+    @JoinColumn(name="emailCentre") //foreign key
+    private Centre centre;
 }

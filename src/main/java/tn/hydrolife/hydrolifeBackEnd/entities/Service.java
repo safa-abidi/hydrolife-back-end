@@ -22,4 +22,9 @@ public class Service {
     private String libelle_service;
     private String description_service;
     private double prix_service;
+
+    //relations
+    @ManyToOne
+    @JoinColumn(name="emailCentre") //foreign key
+    private Centre centre;
 }

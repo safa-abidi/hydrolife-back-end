@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,4 +23,13 @@ public class Reservation {
     private Date date_debut_res;
     private Date date_fin_res;
     private int nbre_personnes_res;
+
+    //relations
+    @ManyToOne
+    @JoinColumn(name="emailClient") //foreign key
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name="emailCentre") //foreign key
+    private Centre centre;
 }

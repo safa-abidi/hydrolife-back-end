@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Data
@@ -19,4 +21,9 @@ public class Photo {
     private String titre_photo;
     private String description;
     private String url_photo;
+
+    //relations
+    @ManyToOne
+    @JoinColumn(name="emailCentre") //foreign key
+    private Centre centre;
 }

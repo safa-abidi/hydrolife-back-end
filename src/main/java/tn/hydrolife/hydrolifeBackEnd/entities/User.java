@@ -16,6 +16,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 public abstract class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id_user;
+
     private String email;
     private String password;
     private String nom;
