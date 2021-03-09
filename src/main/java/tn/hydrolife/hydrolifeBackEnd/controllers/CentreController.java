@@ -2,6 +2,8 @@ package tn.hydrolife.hydrolifeBackEnd.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
@@ -43,6 +45,9 @@ public class CentreController {
     //ajouter un centre
     @PostMapping("/add")
     public ResponseEntity<Centre> addCentre(@RequestBody Centre centre){
+        //password encoding
+        //centre.setPassword(new BCryptPasswordEncoder().encode(centre.getPassword()));
+
         Centre newCentre = centreService.addCentre(centre);
         return new ResponseEntity<>(newCentre, HttpStatus.CREATED);
     }
@@ -55,6 +60,7 @@ public class CentreController {
     }
 
     //supprimer un centre
+    @PreAuthorize("hasRole('CENTRE')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCentre(@PathVariable("id") Long id){
         centreService.deleteCentre(id);

@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
-@DiscriminatorValue("centre")
+@DiscriminatorValue("CENTRE")
 
 @Data
 @NoArgsConstructor

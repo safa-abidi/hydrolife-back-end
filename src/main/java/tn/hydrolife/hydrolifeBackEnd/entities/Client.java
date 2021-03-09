@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@DiscriminatorValue("client")
+@DiscriminatorValue("CLIENT")
 
 @Entity
 @Data

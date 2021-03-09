@@ -43,9 +43,9 @@ public class CentreService {
                 .orElseThrow(()-> new UserNotFoundException("User by id "+id+" was not found"));
     }
 
-//    //trouver un centre avec email
-//    public Centre findCentreByEmail(String email){
-//        return centreRepository.findCentreByEmail(email)
-//                .orElseThrow(()-> new UserNotFoundException("User by id "+email+" was not found"));
-//    }
+    //trouver un centre avec email
+    public Centre findCentreByEmail(String email){
+        return centreRepository.findByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException("User by id "+email+" was not found"));
+    }
 }

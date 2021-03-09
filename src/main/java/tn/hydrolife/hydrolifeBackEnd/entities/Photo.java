@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Data
@@ -20,6 +17,7 @@ public class Photo {
     private UUID id_photo;
     private String titre_photo;
     private String description;
+    @Column(nullable = false)
     private String url_photo;
 
     //relations
