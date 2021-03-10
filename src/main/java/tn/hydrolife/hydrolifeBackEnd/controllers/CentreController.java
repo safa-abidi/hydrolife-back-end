@@ -7,9 +7,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tn.hydrolife.hydrolifeBackEnd.MyUserDetails;
 import tn.hydrolife.hydrolifeBackEnd.MyUserDetailsService;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.models.AuthenticationRequest;
@@ -87,15 +87,16 @@ public class CentreController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
-            );
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+                );
+
         }catch(BadCredentialsException e){
             throw new Exception("incorrect email or password", e);
         }
-        final UserDetails userDetails = userDetailsService
+        final MyUserDetails myUserDetails = (MyUserDetails) userDetailsService
                 .loadUserByUsername(authenticationRequest.getEmail());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        final String jwt = jwtTokenUtil.generateToken(myUserDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }

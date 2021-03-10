@@ -3,10 +3,10 @@ package tn.hydrolife.hydrolifeBackEnd.filters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tn.hydrolife.hydrolifeBackEnd.MyUserDetails;
 import tn.hydrolife.hydrolifeBackEnd.MyUserDetailsService;
 import tn.hydrolife.hydrolifeBackEnd.util.JwtUtil;
 
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private MyUserDetailsService myUserDetailsService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -37,11 +37,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         //now i have to extract the user details
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-            if (jwtUtil.validateToken(jwt, userDetails)) {
+            MyUserDetails myUserDetails = (MyUserDetails) this.myUserDetailsService.loadUserByUsername(email);
+            if (jwtUtil.validateToken(jwt, myUserDetails)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+                        myUserDetails, null, myUserDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
