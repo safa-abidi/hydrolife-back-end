@@ -1,12 +1,21 @@
 package tn.hydrolife.hydrolifeBackEnd.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tn.hydrolife.hydrolifeBackEnd.MyUserDetailsService;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
+import tn.hydrolife.hydrolifeBackEnd.models.AuthenticationRequest;
+import tn.hydrolife.hydrolifeBackEnd.models.AuthenticationResponse;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
+import tn.hydrolife.hydrolifeBackEnd.util.JwtUtil;
 
 import java.util.List;
 
@@ -14,6 +23,13 @@ import java.util.List;
 @RequestMapping("/centre")
 public class CentreController {
     private final CentreService centreService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private MyUserDetailsService userDetailsService;
+    @Autowired
+    private JwtUtil jwtTokenUtil;
 
     //constructor
     public CentreController(CentreService centreService) {
@@ -65,5 +81,21 @@ public class CentreController {
     public ResponseEntity<?> deleteCentre(@PathVariable("id") Long id){
         centreService.deleteCentre(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //authentication endpoint
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+            );
+        }catch(BadCredentialsException e){
+            throw new Exception("incorrect email or password", e);
+        }
+        final UserDetails userDetails = userDetailsService
+                .loadUserByUsername(authenticationRequest.getEmail());
+        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }
