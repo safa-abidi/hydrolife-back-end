@@ -2,6 +2,7 @@ package tn.hydrolife.hydrolifeBackEnd;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class MyUserDetails implements UserDetails {
         this.nom = centre.getNom();
         this.adresse = centre.getAdresse();
         this.tel = centre.getTel();
+        this.description = centre.getDescription();
 
     }
 
