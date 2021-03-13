@@ -62,7 +62,7 @@ public class CentreController {
     @PostMapping("/add")
     public ResponseEntity<Centre> addCentre(@RequestBody Centre centre){
         //password encoding
-        //centre.setPassword(new BCryptPasswordEncoder().encode(centre.getPassword()));
+        centre.setPassword(new BCryptPasswordEncoder().encode(centre.getPassword()));
 
         Centre newCentre = centreService.addCentre(centre);
         return new ResponseEntity<>(newCentre, HttpStatus.CREATED);

@@ -2,7 +2,6 @@ package tn.hydrolife.hydrolifeBackEnd;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class MyUserDetails implements UserDetails {
+
 
     private String email;
     private String password;

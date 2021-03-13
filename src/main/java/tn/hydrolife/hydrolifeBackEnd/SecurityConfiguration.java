@@ -11,14 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import tn.hydrolife.hydrolifeBackEnd.filters.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     //authentication
     @Autowired
     MyUserDetailsService myUserDetailsService;
@@ -28,8 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService);
-               // .passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(myUserDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     //authorisation
@@ -43,17 +42,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/find/{id}").permitAll()
 //                .and().formLogin();
 
+        //http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) //for when i use my api with browser and not postman
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/centre/authenticate").permitAll()
                 .antMatchers("/centre/add").permitAll()
                 .antMatchers("/centre/all").permitAll()
-                .antMatchers("/find/{id}").permitAll()
+                .antMatchers("/centre/find/{id}").permitAll()
+                .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using JWT
                 //.and().formLogin(); //form (of spring security) authentication
 
-                //.anyRequest().authenticated(); //for any request it needs authentication
+
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -66,14 +67,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-//        @Bean
-//        public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return NoOpPasswordEncoder.getInstance();
 //    }
+
+        @Bean
+        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
