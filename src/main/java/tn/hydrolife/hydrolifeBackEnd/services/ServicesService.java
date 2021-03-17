@@ -1,24 +1,34 @@
 package tn.hydrolife.hydrolifeBackEnd.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
+import tn.hydrolife.hydrolifeBackEnd.entities.User;
 import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
+import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 import tn.hydrolife.hydrolifeBackEnd.repositories.ServicesRepository;
 import tn.hydrolife.hydrolifeBackEnd.entities.Services;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServicesService {
     private final ServicesRepository servicesRepository;
+    private final CentreService centreService;
+
 
     @Autowired
-    public ServicesService(ServicesRepository servicesRepository) {
+    public ServicesService(ServicesRepository servicesRepository, CentreService centreService, CentreRepository centreRepository) {
         this.servicesRepository = servicesRepository;
+        this.centreService = centreService;
     }
 
-    //ajouter un service
+    //ajouter un service //did some MESS
     public Services addService(Services service){
+        Optional<Centre> currentCentre = centreService.getCurrentCentre();
+        service.setIdCentre(currentCentre.get().getId());
         return servicesRepository.save(service);
     }
 

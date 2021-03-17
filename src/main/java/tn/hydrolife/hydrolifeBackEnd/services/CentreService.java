@@ -1,15 +1,23 @@
 package tn.hydrolife.hydrolifeBackEnd.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import tn.hydrolife.hydrolifeBackEnd.MyUserDetails;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
+import tn.hydrolife.hydrolifeBackEnd.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CentreService {
+    @Autowired
+    UserRepository userRepository;
     private final CentreRepository centreRepository;
 
     @Autowired
@@ -47,5 +55,13 @@ public class CentreService {
     public Centre findCentreByEmail(String email){
         return centreRepository.findByEmail(email)
                 .orElseThrow(()-> new HydroLifeException("User by email "+email+" was not found"));
+    }
+
+    //TRYING TO GET LOGGED CENTRE INFORMATION
+    @Transactional(readOnly = true)
+    public Optional<Centre> getCurrentCentre() {
+        MyUserDetails principal = (MyUserDetails) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return centreRepository.findByEmail(principal.getUsername());
     }
 }
