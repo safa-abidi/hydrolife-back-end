@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
-import tn.hydrolife.hydrolifeBackEnd.exceptions.UserNotFoundException;
+import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Centre> centre = centreRepository.findByEmail(email);
 
-        centre.orElseThrow(()-> new UserNotFoundException("Not found "+ email));
+        centre.orElseThrow(()-> new HydroLifeException("Not found "+ email));
 
         return centre.map(MyUserDetails::new).get();
 

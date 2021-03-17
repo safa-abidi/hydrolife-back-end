@@ -3,7 +3,7 @@ package tn.hydrolife.hydrolifeBackEnd.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
-import tn.hydrolife.hydrolifeBackEnd.exceptions.UserNotFoundException;
+import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 
 import java.util.List;
@@ -40,12 +40,12 @@ public class CentreService {
     //trouver un centre avec id
     public Centre findCentre(Long id){
         return centreRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException("User by id "+id+" was not found"));
+                .orElseThrow(()-> new HydroLifeException("User by id "+id+" was not found"));
     }
 
     //trouver un centre avec email
     public Centre findCentreByEmail(String email){
         return centreRepository.findByEmail(email)
-                .orElseThrow(()-> new UserNotFoundException("User by email "+email+" was not found"));
+                .orElseThrow(()-> new HydroLifeException("User by email "+email+" was not found"));
     }
 }

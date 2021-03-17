@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 public class CleEtrangerePromoService implements Serializable {
-    private Service service;
+    private Services services;
     private Promotion promotion;
 }

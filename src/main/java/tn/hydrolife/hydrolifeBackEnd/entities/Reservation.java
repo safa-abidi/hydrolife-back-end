@@ -18,7 +18,8 @@ import java.util.UUID;
 @Entity
 public class Reservation {
     @Id
-    private UUID id_res;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_res;
     private Date date_debut_res;
     private Date date_fin_res;
     private int nbre_personnes_res;
@@ -33,5 +34,5 @@ public class Reservation {
     private Centre centre;
 
     @OneToMany(mappedBy="reservation")
-    Set<Service> services = new HashSet<Service>();
+    Set<Services> services = new HashSet<Services>();
 }

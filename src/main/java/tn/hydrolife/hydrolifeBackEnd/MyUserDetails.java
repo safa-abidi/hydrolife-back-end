@@ -10,7 +10,6 @@ import java.util.List;
 
 public class MyUserDetails implements UserDetails {
 
-
     private String email;
     private String password;
     private String nom;

@@ -26,7 +26,7 @@ public class Centre extends User{
     Set<Photo> photos = new HashSet<Photo>();
 
     @OneToMany(mappedBy="centre")
-    Set<Service> services = new HashSet<Service>();
+    Set<Services> services = new HashSet<Services>();
 
     @OneToMany(mappedBy="centre")
     Set<Promotion> promotions = new HashSet<Promotion>();

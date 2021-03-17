@@ -8,8 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
-
 
 
 @Data
@@ -19,7 +17,8 @@ import java.util.UUID;
 @Entity
 public class Promotion {
     @Id
-    private UUID id_promo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_promo;
     private String titre_promo;
     private String description_promo;
     private Date date_debut_promo;
@@ -31,5 +30,5 @@ public class Promotion {
     private Centre centre;
 
     @OneToMany(mappedBy = "promotion")
-    Set<PromoService> promoServices = new HashSet<PromoService>();
+    Set<PromoServices> promoServices = new HashSet<PromoServices>();
 }

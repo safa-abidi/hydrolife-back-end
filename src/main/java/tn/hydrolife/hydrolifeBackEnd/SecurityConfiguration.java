@@ -10,16 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import tn.hydrolife.hydrolifeBackEnd.filters.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    //authentication
+
+    //AUTHENTICATION
     @Autowired
     MyUserDetailsService myUserDetailsService;
 
@@ -28,30 +27,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService);
-                //.passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(myUserDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
-    //authorisation
+    //AUTHORIZATION
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/centre/update").hasRole("CENTRE")
-//                .antMatchers("/delete/{id}").hasRole("CENTRE")
-//                .antMatchers("/centre/add").permitAll()
-//                .antMatchers("/centre/all").permitAll()
-//                .antMatchers("/find/{id}").permitAll()
-//                .and().formLogin();
-
-
-        http.csrf().disable()
-        //http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) //for when i use my api with browser and not postman
-
+        http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/centre/authenticate").permitAll()
-                .antMatchers("/centre/add").permitAll()
-                .antMatchers("/centre/all").permitAll()
-                .antMatchers("/centre/find/{id}").permitAll()
+                .antMatchers("/api/centre/authenticate").permitAll()
+                .antMatchers("/api/centre/add").permitAll()
+                .antMatchers("/api/centre/all").permitAll()
+                .antMatchers("/api/centre/find/{id}").permitAll()
                 .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using JWT
@@ -70,14 +59,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
-
-//        @Bean
-//        public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//        return new BCryptPasswordEncoder();
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return NoOpPasswordEncoder.getInstance();
 //    }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

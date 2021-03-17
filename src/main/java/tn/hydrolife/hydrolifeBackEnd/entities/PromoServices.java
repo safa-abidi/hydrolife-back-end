@@ -13,12 +13,12 @@ import javax.persistence.*;
 
 
 @IdClass(CleEtrangerePromoService.class)
-public class PromoService {
+public class PromoServices {
 
     @Id
     @ManyToOne
     @JoinColumn(name="id_service") //foreign key
-    private Service service;
+    private Services services;
 
     @Id
     @ManyToOne

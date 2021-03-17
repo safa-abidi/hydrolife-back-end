@@ -5,5 +5,5 @@ import tn.hydrolife.hydrolifeBackEnd.entities.Promotion;
 
 import java.util.UUID;
 
-public interface PromotionRepository extends JpaRepository<Promotion, UUID> {
+public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 }

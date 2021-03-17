@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +13,8 @@ import java.util.UUID;
 @Entity
 public class Photo {
     @Id
-    private UUID id_photo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_photo;
     private String titre_photo;
     private String description;
     @Column(nullable = false)
