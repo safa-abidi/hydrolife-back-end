@@ -2,7 +2,7 @@ package tn.hydrolife.hydrolifeBackEnd;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
+import tn.hydrolife.hydrolifeBackEnd.entities.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,19 +12,13 @@ public class MyUserDetails implements UserDetails {
 
     private String email;
     private String password;
-    private String nom;
-    private String adresse;
-    private String tel;
-    private String description;
+
     private List<GrantedAuthority> authorities;
 
-    public MyUserDetails(Centre centre) {
-        this.email = centre.getEmail();
-        this.password = centre.getPassword();
-        this.nom = centre.getNom();
-        this.adresse = centre.getAdresse();
-        this.tel = centre.getTel();
-        this.description = centre.getDescription();
+    public MyUserDetails(User user) {
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+
 
     }
 

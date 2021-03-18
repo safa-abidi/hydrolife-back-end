@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -20,15 +21,15 @@ public class Centre extends User {
     private String description;
 
     //relations
-    @OneToMany(mappedBy = "centre")
-    Set<Reservation> reservations = new HashSet<Reservation>();
-
-    @OneToMany(mappedBy = "centre")
-    Set<Photo> photos = new HashSet<Photo>();
-
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     Set<Services> services = new HashSet<Services>();
 
-    @OneToMany(mappedBy = "centre")
+    @OneToMany(cascade = CascadeType.ALL)
+    Set<Reservation> reservations = new HashSet<Reservation>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    Set<Photo> photos = new HashSet<Photo>();
+
+    @OneToMany(cascade = CascadeType.ALL)
     Set<Promotion> promotions = new HashSet<Promotion>();
 }

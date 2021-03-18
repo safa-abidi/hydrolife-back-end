@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -22,6 +23,6 @@ public class Client extends User {
     private Date dateNaissance;
 
     //relations
-    @OneToMany(mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL)
     Set<Reservation> reservations = new HashSet<Reservation>();
 }

@@ -23,12 +23,15 @@ public class Promotion {
     private String description_promo;
     private Date date_debut_promo;
     private Date date_fin_promo;
+    private double pourcentage;
+
+    private Long idCentre;
 
     //relations
-    @ManyToOne
-    @JoinColumn(name = "id_centre") //foreign key
-    private Centre centre;
-
-    @OneToMany(mappedBy = "promotion")
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
     Set<PromoServices> promoServices = new HashSet<PromoServices>();
+
+//    @ManyToOne
+//    @JoinColumn(name = "id_centre") //foreign key
+//    private Centre centre;
 }

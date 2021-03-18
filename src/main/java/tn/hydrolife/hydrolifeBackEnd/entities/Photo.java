@@ -15,13 +15,17 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_photo;
+
     private String titre_photo;
     private String description;
+
     @Column(nullable = false)
     private String url_photo;
 
+    private Long idCentre;
+
     //relations
-    @ManyToOne
-    @JoinColumn(name = "id_centre") //foreign key
-    private Centre centre;
+//    @ManyToOne
+//    @JoinColumn(name = "id_centre") //foreign key
+//    private Centre centre;
 }

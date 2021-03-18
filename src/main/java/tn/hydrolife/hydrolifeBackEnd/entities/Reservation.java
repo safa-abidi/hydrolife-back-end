@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Data
@@ -24,15 +23,18 @@ public class Reservation {
     private Date date_fin_res;
     private int nbre_personnes_res;
 
-    //relations
-    @ManyToOne
-    @JoinColumn(name = "id_client") //foreign key
-    private Client client;
+    private Long idClient;
 
+    //relations
     @ManyToOne
     @JoinColumn(name = "id_centre") //foreign key
     private Centre centre;
 
-    @OneToMany(mappedBy = "reservation")
-    Set<Services> services = new HashSet<Services>();
+    @ManyToOne
+    @JoinColumn(name="id_service")
+    private Services service;
+
+//    @ManyToOne
+//    @JoinColumn(name = "id_client") //foreign key
+//    private Client client;
 }

@@ -8,9 +8,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-//heritage
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_service", discriminatorType = DiscriminatorType.STRING, length = 30)
 
 @Data
 @NoArgsConstructor
@@ -25,15 +22,17 @@ public class Services {
     private String description_service;
     private double prix_service;
 
-    //relations
-    //@ManyToOne
-    //@JoinColumn(name="id_centre") //foreign key
     private Long idCentre;
 
-    @OneToMany(mappedBy = "services")
+    //relations
+    @OneToMany(mappedBy = "services", cascade = CascadeType.ALL)
     Set<PromoServices> promoServices = new HashSet<PromoServices>();
 
-    @ManyToOne
-    @JoinColumn(name = "id_reservation") //foreign key
-    private Reservation reservation;
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    Set<Reservation> reservations = new HashSet<>();
+
+//    @ManyToOne
+//    @JoinColumn(name="id_centre")//foreign key
+//    private Centre centre;
+
 }

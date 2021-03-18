@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/centre/authenticate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
 
                 .antMatchers("/api/centre/add").permitAll()
                 .antMatchers("/api/centre/all").permitAll()
@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/service/find/{id}").permitAll()
                 .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using JWT
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using Json Web Tokens
         //.and().formLogin(); //form (of spring security) authentication
 
 
