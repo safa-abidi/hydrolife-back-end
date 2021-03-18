@@ -42,34 +42,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/centre/add").permitAll()
                 .antMatchers("/api/centre/all").permitAll()
                 .antMatchers("/api/centre/find/{id}").permitAll()
+                .antMatchers("/api/centre/get/{email}").permitAll()
 
                 .antMatchers("/api/service/all").permitAll()
                 .antMatchers("/api/service/find/{id}").permitAll()
                 .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using JWT
-                //.and().formLogin(); //form (of spring security) authentication
-
+        //.and().formLogin(); //form (of spring security) authentication
 
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 
-
     @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return NoOpPasswordEncoder.getInstance();
-//    }
-
-        @Bean
-        public PasswordEncoder passwordEncoder() {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

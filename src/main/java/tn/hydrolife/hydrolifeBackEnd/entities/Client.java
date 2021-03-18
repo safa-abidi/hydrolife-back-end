@@ -22,6 +22,6 @@ public class Client extends User {
     private Date dateNaissance;
 
     //relations
-    @OneToMany(mappedBy="client")
+    @OneToMany(mappedBy = "client")
     Set<Reservation> reservations = new HashSet<Reservation>();
 }

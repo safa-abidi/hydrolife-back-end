@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 //heritage
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="role", discriminatorType = DiscriminatorType.STRING, length = 10)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING, length = 10)
 
 @Entity
 @Data

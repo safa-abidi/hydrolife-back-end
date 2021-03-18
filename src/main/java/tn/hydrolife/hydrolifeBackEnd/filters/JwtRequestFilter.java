@@ -30,13 +30,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String email = null;
         String jwt = null;
 
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             email = jwtUtil.extractUsername(jwt); //now i have the username(email)
         }
 
         //now i have to extract the user details
-        if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             MyUserDetails myUserDetails = (MyUserDetails) this.myUserDetailsService.loadUserByUsername(email);
             if (jwtUtil.validateToken(jwt, myUserDetails)) {
 

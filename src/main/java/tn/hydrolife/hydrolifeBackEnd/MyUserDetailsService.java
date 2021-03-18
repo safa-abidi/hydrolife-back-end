@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Centre> centre = centreRepository.findByEmail(email);
 
-        centre.orElseThrow(()-> new HydroLifeException("Not found "+ email));
+        centre.orElseThrow(() -> new HydroLifeException("Not found " + email));
 
         return centre.map(MyUserDetails::new).get();
 

@@ -10,7 +10,7 @@ import java.util.Set;
 
 //heritage
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type_service", discriminatorType = DiscriminatorType.STRING, length = 30)
+@DiscriminatorColumn(name = "type_service", discriminatorType = DiscriminatorType.STRING, length = 30)
 
 @Data
 @NoArgsConstructor
@@ -34,6 +34,6 @@ public class Services {
     Set<PromoServices> promoServices = new HashSet<PromoServices>();
 
     @ManyToOne
-    @JoinColumn(name="id_reservation") //foreign key
+    @JoinColumn(name = "id_reservation") //foreign key
     private Reservation reservation;
 }

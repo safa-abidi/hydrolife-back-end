@@ -26,13 +26,13 @@ public class Reservation {
 
     //relations
     @ManyToOne
-    @JoinColumn(name="id_client") //foreign key
+    @JoinColumn(name = "id_client") //foreign key
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name="id_centre") //foreign key
+    @JoinColumn(name = "id_centre") //foreign key
     private Centre centre;
 
-    @OneToMany(mappedBy="reservation")
+    @OneToMany(mappedBy = "reservation")
     Set<Services> services = new HashSet<Services>();
 }

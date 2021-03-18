@@ -26,31 +26,31 @@ public class ServicesService {
     }
 
     //ajouter un service //did some MESS
-    public Services addService(Services service){
+    public Services addService(Services service) {
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
         service.setIdCentre(currentCentre.get().getId());
         return servicesRepository.save(service);
     }
 
     //trouver tous les services
-    public List<Services> findAllServices(){
+    public List<Services> findAllServices() {
         return servicesRepository.findAll();
     }
 
     //modifier
-    public Services updateService(Services service){
+    public Services updateService(Services service) {
         return servicesRepository.save(service);
     }
 
     //supprimer
-    public void deleteService(Long id){
+    public void deleteService(Long id) {
         servicesRepository.deleteById(id);
     }
 
     //trouver service avec id
-    public Services findService(long id){
+    public Services findService(long id) {
         return servicesRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("Service by id "+id+" was not found"));
+                .orElseThrow(() -> new HydroLifeException("Service by id " + id + " was not found"));
     }
 
 }

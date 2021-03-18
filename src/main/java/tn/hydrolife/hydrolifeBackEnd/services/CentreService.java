@@ -26,38 +26,38 @@ public class CentreService {
     }
 
     //ajouter un centre
-    public Centre addCentre(Centre centre){
+    public Centre addCentre(Centre centre) {
         return centreRepository.save(centre);
     }
 
     //trouver tous les centres
-    public List<Centre> findAllCentres(){
+    public List<Centre> findAllCentres() {
         return centreRepository.findAll();
     }
 
     //modifier
-    public Centre updateCentre(Centre centre){
+    public Centre updateCentre(Centre centre) {
         return centreRepository.save(centre);
     }
 
     //supprimer
-    public void deleteCentre(Long id){
+    public void deleteCentre(Long id) {
         centreRepository.deleteById(id);
     }
 
     //trouver un centre avec id
-    public Centre findCentre(Long id){
+    public Centre findCentre(Long id) {
         return centreRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("User by id "+id+" was not found"));
+                .orElseThrow(() -> new HydroLifeException("User by id " + id + " was not found"));
     }
 
     //trouver un centre avec email
-    public Centre findCentreByEmail(String email){
+    public Centre findCentreByEmail(String email) {
         return centreRepository.findByEmail(email)
-                .orElseThrow(()-> new HydroLifeException("User by email "+email+" was not found"));
+                .orElseThrow(() -> new HydroLifeException("User by email " + email + " was not found"));
     }
 
-    //TRYING TO GET LOGGED CENTRE INFORMATION
+    //GET LOGGED CENTRE INFORMATION
     @Transactional(readOnly = true)
     public Optional<Centre> getCurrentCentre() {
         MyUserDetails principal = (MyUserDetails) SecurityContextHolder.

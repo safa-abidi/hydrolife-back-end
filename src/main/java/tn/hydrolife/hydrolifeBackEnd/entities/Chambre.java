@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 @Entity
 public class Chambre extends Services {
-//    @Id
+    //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
     private long numero_chambre;
     private String type_chambre;

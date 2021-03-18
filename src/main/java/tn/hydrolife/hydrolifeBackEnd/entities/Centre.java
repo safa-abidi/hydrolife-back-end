@@ -3,6 +3,7 @@ package tn.hydrolife.hydrolifeBackEnd.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -15,19 +16,19 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Centre extends User{
+public class Centre extends User {
     private String description;
 
     //relations
-    @OneToMany(mappedBy="centre")
+    @OneToMany(mappedBy = "centre")
     Set<Reservation> reservations = new HashSet<Reservation>();
 
-    @OneToMany(mappedBy="centre")
+    @OneToMany(mappedBy = "centre")
     Set<Photo> photos = new HashSet<Photo>();
 
-    //@OneToMany(mappedBy="centre")
-    //Set<Services> services = new HashSet<Services>();
+    @OneToMany()
+    Set<Services> services = new HashSet<Services>();
 
-    @OneToMany(mappedBy="centre")
+    @OneToMany(mappedBy = "centre")
     Set<Promotion> promotions = new HashSet<Promotion>();
 }

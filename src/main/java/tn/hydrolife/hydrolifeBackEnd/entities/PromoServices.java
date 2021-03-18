@@ -17,11 +17,11 @@ public class PromoServices {
 
     @Id
     @ManyToOne
-    @JoinColumn(name="id_service") //foreign key
+    @JoinColumn(name = "id_service") //foreign key
     private Services services;
 
     @Id
     @ManyToOne
-    @JoinColumn(name="id_promo") //foreign key
+    @JoinColumn(name = "id_promo") //foreign key
     private Promotion promotion;
 }

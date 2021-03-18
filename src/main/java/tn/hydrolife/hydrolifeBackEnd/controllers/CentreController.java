@@ -44,29 +44,29 @@ public class CentreController {
 
     //trouver tous les centres
     @GetMapping("/all")
-    public ResponseEntity<List<Centre>> getAllCentres(){
+    public ResponseEntity<List<Centre>> getAllCentres() {
         List<Centre> centres = centreService.findAllCentres();
         return new ResponseEntity<>(centres, HttpStatus.OK);
     }
 
     //trouver un centre avec id
     @GetMapping("/find/{id}")
-    public ResponseEntity<Centre> getCentreById(@PathVariable("id") Long id){
+    public ResponseEntity<Centre> getCentreById(@PathVariable("id") Long id) {
         Centre centre = centreService.findCentre(id);
         return new ResponseEntity<Centre>(centre, HttpStatus.OK);
     }
 
 
-//    //trouver un centre avec email
-//    @GetMapping("/findbyemail/{email}")
-//    public ResponseEntity<Centre> getCentreByEmail(@PathVariable("email") String email){
-//        Centre centre = centreService.findCentreByEmail(email);
-//        return new ResponseEntity<Centre>(centre, HttpStatus.OK);
-//    }
+    //trouver un centre avec email
+    @GetMapping("/get/{email}")
+    public ResponseEntity<Centre> getCentreByEmail(@PathVariable("email") String email) {
+        Centre centre = centreService.findCentreByEmail(email);
+        return new ResponseEntity<Centre>(centre, HttpStatus.OK);
+    }
 
     //ajouter un centre
     @PostMapping("/add")
-    public ResponseEntity<Centre> addCentre(@RequestBody Centre centre){
+    public ResponseEntity<Centre> addCentre(@RequestBody Centre centre) {
         //password encoding
         centre.setPassword(passwordEncoder.encode(centre.getPassword()));
 
@@ -76,7 +76,7 @@ public class CentreController {
 
     //modifier un centre
     @PutMapping("/update")
-    public ResponseEntity<Centre> updateCentre(@RequestBody Centre centre){
+    public ResponseEntity<Centre> updateCentre(@RequestBody Centre centre) {
         Centre updateCentre = centreService.updateCentre(centre);
         return new ResponseEntity<>(updateCentre, HttpStatus.OK);
     }
@@ -84,21 +84,21 @@ public class CentreController {
     //supprimer un centre
     //@PreAuthorize("hasRole('CENTRE')")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCentre(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteCentre(@PathVariable("id") Long id) {
         centreService.deleteCentre(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //authentication endpoint
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
-                Authentication authenticate = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
-                );
+            Authentication authenticate = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+            );
             SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        }catch(BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             throw new Exception("incorrect email or password", e);
         }
         final MyUserDetails myUserDetails = (MyUserDetails) userDetailsService
