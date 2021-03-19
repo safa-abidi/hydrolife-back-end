@@ -25,7 +25,7 @@ public class ServicesController {
         return new ResponseEntity<>(services, HttpStatus.OK);
     }
 
-    //trouver service avec id
+    //trouver service par son id
     @GetMapping("/find/{id}")
     public ResponseEntity<Services> getServiceById(@PathVariable("id") Long id) {
         Services service = servicesService.findService(id);

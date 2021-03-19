@@ -40,21 +40,23 @@ public class ServicesService {
 
     //modifier
     public Services updateService(Services service) {
+        Optional<Centre> currentCentre = centreService.getCurrentCentre();
+        service.setIdCentre(currentCentre.get().getId());
         return servicesRepository.save(service);
     }
 
-    //supprimer
+    //supprimer par id
     public void deleteService(Long id) {
         servicesRepository.deleteById(id);
     }
 
-    //trouver service avec id
-    public Services findService(long id) {
+    //trouver service avec son id
+    public Services findService(Long id) {
         return servicesRepository.findById(id)
                 .orElseThrow(() -> new HydroLifeException("Service by id " + id + " was not found"));
     }
 
-    //collecter les services d'un même centre par id
+    //collecter les services d'un même centre par son idCentre
     public List<Services> findServicesByCentre(Long id){
         Centre centre = centreRepository.findById(id)
                 .orElseThrow(()-> new HydroLifeException("centre with id "+id+" was not found"));
