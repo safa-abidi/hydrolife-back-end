@@ -104,5 +104,12 @@ public class PhotoController {
         return new ResponseEntity<>(photos, HttpStatus.OK);
     }
 
+    //supprimer une photo
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteService(@PathVariable("id") Long id) {
+        photoRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
