@@ -32,7 +32,7 @@ public class PhotoService {
         return outputStream.toByteArray();
     }
 
-    // uncompress the image bytes before returning it to the angular application
+    // decompress the image bytes before returning it to the angular application
     public static byte[] decompressZLib(byte[] data) {
         Inflater inflater = new Inflater();
         inflater.setInput(data);

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.entities.Photo;
-import tn.hydrolife.hydrolifeBackEnd.entities.Services;
 import tn.hydrolife.hydrolifeBackEnd.repositories.PhotoRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
 import tn.hydrolife.hydrolifeBackEnd.services.PhotoService;
@@ -56,6 +55,7 @@ public class PhotoController {
         photoRepository.save(img);
         return ResponseEntity.status(HttpStatus.OK);
     }
+
     //getting images
 //    @GetMapping(path = { "/get/{imageName}" })
 //    public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
@@ -67,7 +67,7 @@ public class PhotoController {
 //    }
 
     //collecter les photo d'un même centre par id
-    @GetMapping("findbycentre/{id}")
+    @GetMapping("/findbycentre/{id}")
     public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id){
         //get current logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
@@ -80,6 +80,23 @@ public class PhotoController {
                 photo.getTitre_photo(),
                 photo.getDescription(),
                 currentCentreId,
+                photo.getName(),
+                photo.getType(),
+                photoService.decompressZLib(photo.getPicByte())));
+
+        return new ResponseEntity<>(photos, HttpStatus.OK);
+    }
+
+    //collecter tous les photos
+    @GetMapping("/all")
+    public ResponseEntity<List<Photo>> getPhotos(){
+
+        List<Photo> photos = photoRepository.findAll();
+        photos.forEach((photo) -> photo = new Photo(
+                photo.getId_photo(),
+                photo.getTitre_photo(),
+                photo.getDescription(),
+                photo.getIdCentre(),
                 photo.getName(),
                 photo.getType(),
                 photoService.decompressZLib(photo.getPicByte())));
