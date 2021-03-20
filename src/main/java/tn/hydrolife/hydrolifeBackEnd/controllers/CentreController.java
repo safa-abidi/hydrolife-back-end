@@ -58,6 +58,9 @@ public class CentreController {
     //modifier un centre
     @PutMapping("/update")
     public ResponseEntity<Centre> updateCentre(@RequestBody Centre centre) {
+        //password encoding
+        centre.setPassword(passwordEncoder.encode(centre.getPassword()));
+
         Centre updateCentre = centreService.updateCentre(centre);
         return new ResponseEntity<>(updateCentre, HttpStatus.OK);
     }

@@ -19,10 +19,10 @@ public class ServicesService {
 
 
     @Autowired
-    public ServicesService(ServicesRepository servicesRepository, CentreService centreService, CentreRepository centreRepository, CentreRepository centreRepository1) {
+    public ServicesService(ServicesRepository servicesRepository, CentreService centreService, CentreRepository centreRepository ) {
         this.servicesRepository = servicesRepository;
         this.centreService = centreService;
-        this.centreRepository = centreRepository1;
+        this.centreRepository = centreRepository;
     }
 
     //ajouter un service
