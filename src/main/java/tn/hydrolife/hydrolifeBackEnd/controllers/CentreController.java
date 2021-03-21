@@ -34,7 +34,7 @@ public class CentreController {
     @GetMapping("/find/{id}")
     public ResponseEntity<Centre> getCentreById(@PathVariable("id") Long id) {
         Centre centre = centreService.findCentre(id);
-        return new ResponseEntity<Centre>(centre, HttpStatus.OK);
+        return new ResponseEntity<>(centre, HttpStatus.OK);
     }
 
 
@@ -42,7 +42,7 @@ public class CentreController {
     @GetMapping("/get/{email}")
     public ResponseEntity<Centre> getCentreByEmail(@PathVariable("email") String email) {
         Centre centre = centreService.findCentreByEmail(email);
-        return new ResponseEntity<Centre>(centre, HttpStatus.OK);
+        return new ResponseEntity<>(centre, HttpStatus.OK);
     }
 
     //ajouter un centre

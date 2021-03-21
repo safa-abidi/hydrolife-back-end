@@ -37,7 +37,7 @@ public class CentreService {
         return centreRepository.save(centre);
     }
 
-    //supprimer
+    //supprimer par id
     public void deleteCentre(Long id) {
         centreRepository.deleteById(id);
     }
@@ -45,13 +45,13 @@ public class CentreService {
     //trouver un centre avec id
     public Centre findCentre(Long id) {
         return centreRepository.findById(id)
-                .orElseThrow(() -> new HydroLifeException("User by id " + id + " was not found"));
+                .orElseThrow(() -> new HydroLifeException("Centre by id " + id + " was not found"));
     }
 
     //trouver un centre avec email
     public Centre findCentreByEmail(String email) {
         return centreRepository.findByEmail(email)
-                .orElseThrow(() -> new HydroLifeException("User by email " + email + " was not found"));
+                .orElseThrow(() -> new HydroLifeException("Centre by email " + email + " was not found"));
     }
 
     //GET LOGGED CENTRE INFORMATION

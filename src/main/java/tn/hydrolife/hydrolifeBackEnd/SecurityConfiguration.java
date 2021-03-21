@@ -39,6 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/authenticate").permitAll()
 
+                .antMatchers("/api/client/add").permitAll()
+                .antMatchers("/api/client/all").permitAll()
+                .antMatchers("/api/client/find/{id}").permitAll()
+                .antMatchers("/api/client/get/{email}").permitAll()
+
                 .antMatchers("/api/centre/add").permitAll()
                 .antMatchers("/api/centre/all").permitAll()
                 .antMatchers("/api/centre/find/{id}").permitAll()
