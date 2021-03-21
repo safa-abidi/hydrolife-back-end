@@ -22,14 +22,14 @@ public class Centre extends User {
 
     //relations
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Services> services = new HashSet<Services>();
+    Set<Services> services = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Reservation> reservations = new HashSet<Reservation>();
+    Set<Reservation> reservations = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Photo> photos = new HashSet<Photo>();
+    Set<Photo> photos = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Promotion> promotions = new HashSet<Promotion>();
+    Set<Promotion> promotions = new HashSet<>();
 }

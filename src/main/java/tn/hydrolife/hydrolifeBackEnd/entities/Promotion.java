@@ -28,8 +28,8 @@ public class Promotion {
     private Long idCentre;
 
     //relations
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
-    Set<PromoServices> promoServices = new HashSet<PromoServices>();
+//    @OneToMany(cascade = CascadeType.ALL)
+//    Set<Services> services = new HashSet<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "id_centre") //foreign key

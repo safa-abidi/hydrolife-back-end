@@ -25,8 +25,9 @@ public class Services {
     private Long idCentre;
 
     //relations
-    @OneToMany(mappedBy = "services", cascade = CascadeType.ALL)
-    Set<PromoServices> promoServices = new HashSet<PromoServices>();
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "idPromo") //clé étrangere
+//    private Promotion promotion;
 
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
     Set<Reservation> reservations = new HashSet<>();

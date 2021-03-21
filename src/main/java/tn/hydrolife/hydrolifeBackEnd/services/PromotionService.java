@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.entities.Promotion;
+import tn.hydrolife.hydrolifeBackEnd.entities.Services;
 import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 import tn.hydrolife.hydrolifeBackEnd.repositories.PromotionRepository;
@@ -16,19 +17,29 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
     private final CentreService centreService;
     private final CentreRepository centreRepository;
+    private final ServicesService servicesService;
 
     @Autowired
-    public PromotionService(PromotionRepository promotionRepository, CentreService centreService, CentreRepository centreRepository) {
+    public PromotionService(PromotionRepository promotionRepository, CentreService centreService, CentreRepository centreRepository, ServicesService servicesService) {
         this.promotionRepository = promotionRepository;
         this.centreService = centreService;
         this.centreRepository = centreRepository;
+        this.servicesService = servicesService;
     }
-    //ajouter une promotion // TODO: adding the services of this promotion
+    //ajouter une promotion //big mess XD
     public Promotion addPromotion(Promotion promotion){
         //getting the logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
-        promotion.setIdCentre(currentCentre.get().getId());
+
+        //getting his id
+        Long IdCentre = currentCentre.get().getId();
+
+        //set it in the promotion
+        promotion.setIdCentre(IdCentre);
+
+        //add the promotion to logged centre
         currentCentre.get().getPromotions().add(promotion);
+
         return promotionRepository.save(promotion);
 
     }
