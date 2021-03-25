@@ -49,13 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/centre/find/{id}").permitAll()
                 .antMatchers("/api/centre/get/{email}").permitAll()
 
-                .antMatchers("/api/service/all").permitAll()
-                .antMatchers("/api/service/find/{id}").permitAll()
+                .antMatchers("/api/service/**").permitAll()
 
-                .antMatchers("/api/promotion/all").permitAll()
-                .antMatchers("/api/promotion/find/{id}").permitAll()
 
-                .antMatchers("/api/photo/all").permitAll()
+                .antMatchers("/api/promotion/**").permitAll()
+
+                .antMatchers("/api/photo/**").permitAll()
                 .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using Json Web Tokens

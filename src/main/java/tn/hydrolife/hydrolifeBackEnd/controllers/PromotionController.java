@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import tn.hydrolife.hydrolifeBackEnd.entities.Promotion;
 import tn.hydrolife.hydrolifeBackEnd.services.PromotionService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
