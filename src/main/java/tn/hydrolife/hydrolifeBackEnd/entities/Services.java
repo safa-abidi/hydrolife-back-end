@@ -24,6 +24,8 @@ public class Services {
 
     private Long idCentre;
 
+    private Long idPromo;
+
     //relations
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "idPromo") //clé étrangere

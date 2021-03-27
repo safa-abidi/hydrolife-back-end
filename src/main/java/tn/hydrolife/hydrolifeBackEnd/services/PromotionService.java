@@ -11,6 +11,7 @@ import tn.hydrolife.hydrolifeBackEnd.repositories.PromotionRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PromotionService {
@@ -37,6 +38,13 @@ public class PromotionService {
         //set it in the promotion
         promotion.setIdCentre(IdCentre);
 
+        Set<Services> currentCentreServices = currentCentre.get().getServices();
+
+        currentCentreServices.forEach((service)-> {
+            service.setIdPromo(promotion.getId_promo());
+            promotion.getServices().add(service);
+        });
+
         //add the promotion to logged centre
         currentCentre.get().getPromotions().add(promotion);
 
@@ -58,6 +66,16 @@ public class PromotionService {
 
     //supprimer par id
     public void deletePromotion(Long id){
+
+        //getting the logged centre
+        Optional<Centre> currentCentre = centreService.getCurrentCentre();
+
+        //getting his id
+        Long IdCentre = currentCentre.get().getId();
+
+        Set<Services> currentCentreServices = currentCentre.get().getServices();
+        currentCentreServices.forEach((service)-> service.setIdPromo(null));
+
         promotionRepository.deleteById(id);
     }
 

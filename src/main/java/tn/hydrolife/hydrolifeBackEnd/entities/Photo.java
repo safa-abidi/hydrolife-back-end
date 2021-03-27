@@ -23,12 +23,7 @@ public class Photo {
     private Long idCentre;
 
     //***POUR LE LOGIC***//
-    private String name;
-    private String type;
-    //image bytes can have large lengths so we specify a value
-    //which is more than the default length for picByte column
-    @Column(name = "picByte", length = 1000)
-    private byte[] picByte;
+   private String fileName;
 
     //relations
 //    @ManyToOne

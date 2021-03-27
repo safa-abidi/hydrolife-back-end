@@ -1,10 +1,13 @@
 package tn.hydrolife.hydrolifeBackEnd.controllers;
 
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
@@ -12,10 +15,10 @@ import tn.hydrolife.hydrolifeBackEnd.entities.Photo;
 import tn.hydrolife.hydrolifeBackEnd.repositories.PhotoRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
 import tn.hydrolife.hydrolifeBackEnd.services.PhotoService;
+import javax.servlet.ServletContext;
+import org.apache.commons.io.FilenameUtils;
 
-import java.io.IOException;
-
-import java.util.List;
+import java.io.File;
 import java.util.Optional;
 
 @RestController
@@ -25,90 +28,47 @@ public class PhotoController {
     @Autowired
     PhotoRepository photoRepository;
     @Autowired
-    PhotoService photoService;
-    @Autowired
     CentreService centreService;
+    @Autowired
+    ServletContext context;
 
     @PostMapping("/add")
-    public BodyBuilder addImage(@RequestParam("imageFile") MultipartFile file, @RequestParam("photo") Photo photo) throws IOException {
+    public ResponseEntity<Photo> addPhoto(@RequestParam("file")MultipartFile file, @RequestParam("photo") String photo) throws JsonParseException, JsonMappingException, Exception {
 
+        Photo thePhoto = new ObjectMapper().readValue(photo, Photo.class);
+        boolean isExist = new File(context.getRealPath("/Images/")).exists();
 
-        System.out.println("Original Image Byte Size - " + file.getBytes().length);
+        if(!isExist){
+            new File(context.getRealPath("/Images/")).mkdir();
+        }
+
+        String fileName = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(fileName)+"."+FilenameUtils.getExtension(fileName);
+        File serverFile = new File(context.getRealPath("/Images/"+File.separator+newFileName));
+        try{
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        thePhoto.setFileName(newFileName);
 
         //get current logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
         //get his id
         Long currentCentreId = currentCentre.get().getId();
-
-        Photo img = new Photo(
-                photo.getId_photo(),
-                photo.getTitre_photo(),
-                photo.getDescription(),
-                currentCentreId,
-                file.getOriginalFilename(),
-                file.getContentType(),
-                photoService.compressZLib(file.getBytes()));
+        //set idCentre in the photo
+        thePhoto.setIdCentre(currentCentreId);
 
         //l'ajouter à ce centre
-        currentCentre.get().getPhotos().add(img);
+        currentCentre.get().getPhotos().add(thePhoto);
 
-        photoRepository.save(img);
-        return ResponseEntity.status(HttpStatus.OK);
-    }
-
-    //getting images
-//    @GetMapping(path = { "/get/{imageName}" })
-//    public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
-//
-//        final Optional<ImageModel> retrievedImage = imageRepository.findByName(imageName);
-//        ImageModel img = new ImageModel(retrievedImage.get().getName(), retrievedImage.get().getType(),
-//                decompressZLib(retrievedImage.get().getPicByte()));
-//        return img;
-//    }
-
-    //collecter les photo d'un même centre par id
-    @GetMapping("/findbycentre/{id}")
-    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id){
-        //get current logged centre
-        Optional<Centre> currentCentre = centreService.getCurrentCentre();
-        //get his id
-        Long currentCentreId = currentCentre.get().getId();
-
-        List<Photo> photos = photoRepository.findByIdCentre(id);
-        photos.forEach((photo) -> photo = new Photo(
-                photo.getId_photo(),
-                photo.getTitre_photo(),
-                photo.getDescription(),
-                currentCentreId,
-                photo.getName(),
-                photo.getType(),
-                photoService.decompressZLib(photo.getPicByte())));
-
-        return new ResponseEntity<>(photos, HttpStatus.OK);
-    }
-
-    //collecter tous les photos
-    @GetMapping("/all")
-    public ResponseEntity<List<Photo>> getPhotos(){
-
-        List<Photo> photos = photoRepository.findAll();
-        photos.forEach((photo) -> photo = new Photo(
-                photo.getId_photo(),
-                photo.getTitre_photo(),
-                photo.getDescription(),
-                photo.getIdCentre(),
-                photo.getName(),
-                photo.getType(),
-                photoService.decompressZLib(photo.getPicByte())));
-
-        return new ResponseEntity<>(photos, HttpStatus.OK);
-    }
-
-    //supprimer une photo
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteService(@PathVariable("id") Long id) {
-        photoRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Photo ph = photoRepository.save(thePhoto);
+        if(ph != null){
+            return new ResponseEntity<>(thePhoto, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
