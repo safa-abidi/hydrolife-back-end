@@ -19,7 +19,7 @@ public class ServicesService {
 
 
     @Autowired
-    public ServicesService(ServicesRepository servicesRepository, CentreService centreService, CentreRepository centreRepository ) {
+    public ServicesService(ServicesRepository servicesRepository, CentreService centreService, CentreRepository centreRepository) {
         this.servicesRepository = servicesRepository;
         this.centreService = centreService;
         this.centreRepository = centreRepository;
@@ -31,8 +31,8 @@ public class ServicesService {
         service.setIdCentre(currentCentre.get().getId());
         currentCentre.get().getServices().add(service);
 
-        if(!currentCentre.get().getPromotions().isEmpty()){
-           service.setIdPromo(currentCentre.get().getPromotions().stream().iterator().next().getId_promo());
+        if (!currentCentre.get().getPromotions().isEmpty()) {
+            service.setIdPromo(currentCentre.get().getPromotions().stream().iterator().next().getId_promo());
         }
 
         return servicesRepository.save(service);
@@ -62,9 +62,9 @@ public class ServicesService {
     }
 
     //collecter les services d'un même centre par son idCentre
-    public List<Services> findServicesByCentre(Long id){
+    public List<Services> findServicesByCentre(Long id) {
         Centre centre = centreRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("centre with id "+id+" was not found"));
+                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
         return servicesRepository.findByIdCentre(id);
     }
 

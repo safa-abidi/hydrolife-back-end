@@ -27,8 +27,9 @@ public class PromotionService {
         this.centreRepository = centreRepository;
         this.servicesService = servicesService;
     }
+
     //ajouter une promotion //big mess XD
-    public Promotion addPromotion(Promotion promotion){
+    public Promotion addPromotion(Promotion promotion) {
         //getting the logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
 
@@ -40,7 +41,7 @@ public class PromotionService {
 
         Set<Services> currentCentreServices = currentCentre.get().getServices();
 
-        currentCentreServices.forEach((service)-> {
+        currentCentreServices.forEach((service) -> {
             service.setIdPromo(promotion.getId_promo());
             promotion.getServices().add(service);
         });
@@ -53,19 +54,19 @@ public class PromotionService {
     }
 
     //trouver tous les promotions
-    public List<Promotion> finAllPromotions(){
+    public List<Promotion> finAllPromotions() {
         return promotionRepository.findAll();
     }
 
     //modifier
-    public Promotion updatePromotion(Promotion promotion){
+    public Promotion updatePromotion(Promotion promotion) {
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
         promotion.setIdCentre(currentCentre.get().getId());
         return promotionRepository.save(promotion);
     }
 
     //supprimer par id
-    public void deletePromotion(Long id){
+    public void deletePromotion(Long id) {
 
         //getting the logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
@@ -74,22 +75,22 @@ public class PromotionService {
         Long IdCentre = currentCentre.get().getId();
 
         Set<Services> currentCentreServices = currentCentre.get().getServices();
-        currentCentreServices.forEach((service)-> service.setIdPromo(null));
+        currentCentreServices.forEach((service) -> service.setIdPromo(null));
 
         promotionRepository.deleteById(id);
     }
 
     //trouver promotion par son id
-    public Promotion findPromotion(Long id){
+    public Promotion findPromotion(Long id) {
         return promotionRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("Promotion with id "+id+" was not found"));
+                .orElseThrow(() -> new HydroLifeException("Promotion with id " + id + " was not found"));
     }
 
     //collecter les promotions d'un meme centre par son idCentre
-    public List<Promotion> findPromotionByCentre(Long id){
+    public List<Promotion> findPromotionByCentre(Long id) {
 
         Centre centre = centreRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("centre was with id "+id+" not found"));
+                .orElseThrow(() -> new HydroLifeException("centre was with id " + id + " not found"));
         return promotionRepository.findByIdCentre(id);
     }
 

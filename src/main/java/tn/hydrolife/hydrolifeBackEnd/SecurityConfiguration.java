@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/centre/all").permitAll()
                 .antMatchers("/api/centre/find/{id}").permitAll()
                 .antMatchers("/api/centre/get/{email}").permitAll()
+                .antMatchers("/api/centre/allAdresses").permitAll()
 
                 .antMatchers("/api/service/**").permitAll()
 

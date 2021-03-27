@@ -23,7 +23,7 @@ public class Photo {
     private Long idCentre;
 
     //***POUR LE LOGIC***//
-   private String fileName;
+    private String fileName;
 
     //relations
 //    @ManyToOne

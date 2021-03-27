@@ -24,28 +24,28 @@ public class ClientController {
 
     //trouver tous les clients
     @GetMapping("/all")
-    public ResponseEntity<List<Client>> getAllClients(){
+    public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.findAllClients();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     //trouver un client par son id
     @GetMapping("/find/{id}")
-    public ResponseEntity<Client> getClientById(@PathVariable("id") Long id){
+    public ResponseEntity<Client> getClientById(@PathVariable("id") Long id) {
         Client client = clientService.findClient(id);
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     //trouver un client avec son email
     @GetMapping("/get/{email}")
-    public ResponseEntity<Client> getClientByEmail(@PathVariable("email") String email){
+    public ResponseEntity<Client> getClientByEmail(@PathVariable("email") String email) {
         Client client = clientService.findClientByEmail(email);
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     //inscrire un client
     @PostMapping("/add")
-    public ResponseEntity<Client> addClient(@RequestBody Client client){
+    public ResponseEntity<Client> addClient(@RequestBody Client client) {
         //password encoding
         client.setPassword(passwordEncoder.encode(client.getPassword()));
 
@@ -55,7 +55,7 @@ public class ClientController {
 
     //modifier les informations d'un client
     @PutMapping("/update")
-    public ResponseEntity<Client> updateClient(@RequestBody Client client){
+    public ResponseEntity<Client> updateClient(@RequestBody Client client) {
         //password encoding
         client.setPassword(passwordEncoder.encode(client.getPassword()));
 
@@ -65,7 +65,7 @@ public class ClientController {
 
     //supprimer un client
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id) {
         clientService.deleteClient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -16,7 +16,9 @@ import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 import tn.hydrolife.hydrolifeBackEnd.repositories.PhotoRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
+
 import javax.servlet.ServletContext;
+
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -40,23 +42,20 @@ public class PhotoController {
     CentreRepository centreRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<Photo> createDocument (@RequestParam("file") MultipartFile file,
-                                                 @RequestParam("photo") String photo) throws JsonParseException , JsonMappingException , Exception
-    {
-        Photo photoo = new ObjectMapper().readValue(photo,Photo.class);
+    public ResponseEntity<Photo> createDocument(@RequestParam("file") MultipartFile file,
+                                                @RequestParam("photo") String photo) throws JsonParseException, JsonMappingException, Exception {
+        Photo photoo = new ObjectMapper().readValue(photo, Photo.class);
         boolean isExit = new File(context.getRealPath("/Images/")).exists();
-        if (!isExit)
-        {
-            new File (context.getRealPath("webapp/Images/")).mkdir();
+        if (!isExit) {
+            new File(context.getRealPath("webapp/Images/")).mkdir();
         }
         String filename = file.getOriginalFilename();
-        String newFileName = FilenameUtils.getBaseName(filename)+"."+FilenameUtils.getExtension(filename);
-        File serverFile = new File (context.getRealPath("/Images/"+File.separator+newFileName));
-        try
-        {
-            FileUtils.writeByteArrayToFile(serverFile,file.getBytes());
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Images/" + File.separator + newFileName));
+        try {
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -74,12 +73,9 @@ public class PhotoController {
         currentCentre.get().getPhotos().add(photoo);
 
         Photo savePhoto = photoRepository.save(photoo);
-        if (savePhoto!= null)
-        {
-            return new ResponseEntity<>(savePhoto,HttpStatus.OK);
-        }
-        else
-        {
+        if (savePhoto != null) {
+            return new ResponseEntity<>(savePhoto, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -93,15 +89,15 @@ public class PhotoController {
 
     //collecter les photos d'un centre
     @GetMapping("/findbycentre/{id}")
-    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception{
+    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception {
         centreRepository.findById(id)
-                .orElseThrow(()-> new HydroLifeException("centre with id "+id+" was not found"));
-        List <Photo> photos = photoRepository.findByIdCentre(id);
+                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
+        List<Photo> photos = photoRepository.findByIdCentre(id);
 
-        photos.forEach((photo)->
+        photos.forEach((photo) ->
         {
             try {
-                Files.readAllBytes(Paths.get(context.getRealPath("/Images")+photo.getFileName()));
+                Files.readAllBytes(Paths.get(context.getRealPath("/Images") + photo.getFileName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -112,13 +108,13 @@ public class PhotoController {
 
     //collecter tous les photos
     @GetMapping("/all")
-    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception{
-        List <Photo> photos = photoRepository.findAll();
+    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception {
+        List<Photo> photos = photoRepository.findAll();
 
-        photos.forEach((photo)->
+        photos.forEach((photo) ->
         {
             try {
-                Files.readAllBytes(Paths.get(context.getRealPath("/Images")+photo.getFileName()));
+                Files.readAllBytes(Paths.get(context.getRealPath("/Images") + photo.getFileName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

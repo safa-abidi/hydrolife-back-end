@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
+import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class CentreController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CentreRepository centreRepository;
 
     //constructor
     public CentreController(CentreService centreService) {
@@ -72,4 +75,10 @@ public class CentreController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //trouver tous les adresses des centres
+    @GetMapping("/findCentreAdresses")
+    public ResponseEntity<List<String>> getAllAdresses() {
+        List<String> adresses = centreRepository.findAllAdresses();
+        return new ResponseEntity<>(adresses, HttpStatus.OK);
+    }
 }

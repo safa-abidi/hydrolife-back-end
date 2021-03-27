@@ -31,7 +31,7 @@ public class Reservation {
     private Centre centre;
 
     @ManyToOne
-    @JoinColumn(name="id_service")
+    @JoinColumn(name = "id_service")
     private Services service;
 
 //    @ManyToOne

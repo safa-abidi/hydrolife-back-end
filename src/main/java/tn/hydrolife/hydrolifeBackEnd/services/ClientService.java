@@ -55,7 +55,7 @@ public class ClientService {
 
     //GET LOGGED CLIENT DETAILS
     @Transactional(readOnly = true)
-    public Optional<Client> getCurrentClient(){
+    public Optional<Client> getCurrentClient() {
         MyUserDetails principal = (MyUserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         return clientRepository.findByEmail(principal.getUsername());
