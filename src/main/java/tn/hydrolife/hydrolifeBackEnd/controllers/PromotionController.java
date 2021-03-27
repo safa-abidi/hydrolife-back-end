@@ -54,7 +54,7 @@ public class PromotionController {
     }
 
     //collecter les promotions d'un meme centre par idCentre
-    @GetMapping("findbycentre/{id}")
+    @GetMapping("/findbycentre/{id}")
     public ResponseEntity<List<Promotion>> getPromotionsByIdCentre(@PathVariable("id") Long id){
         List<Promotion> promotions = promotionService.findPromotionByCentre(id);
         return new ResponseEntity<>(promotions, HttpStatus.OK);

@@ -54,7 +54,7 @@ public class ServicesController {
     }
 
     //collecter les services d'un même centre par id
-    @GetMapping("findbycentre/{id}")
+    @GetMapping("/findbycentre/{id}")
     public ResponseEntity<List<Services>> getServicesByIdCentre(@PathVariable("id") Long id){
         List<Services> services = servicesService.findServicesByCentre(id);
         return new ResponseEntity<>(services, HttpStatus.OK);
