@@ -88,39 +88,59 @@ public class PhotoController {
     }
 
     //collecter les photos d'un centre
-    @GetMapping("/findbycentre/{id}")
-    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception {
-        centreRepository.findById(id)
-                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
-        List<Photo> photos = photoRepository.findByIdCentre(id);
-
-        photos.forEach((photo) ->
-        {
-            try {
-                Files.readAllBytes(Paths.get(context.getRealPath("/Images") + photo.getFileName()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        return new ResponseEntity<>(photos, HttpStatus.OK);
-    }
+//    @GetMapping("/findbycentre/{id}")
+//    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception {
+//        centreRepository.findById(id)
+//                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
+//        List<Photo> photos = photoRepository.findByIdCentre(id);
+//
+//        photos.forEach((photo) ->
+//        {
+//            try {
+//                Files.readAllBytes(Paths.get(context.getRealPath("webapp/Images") + photo.getFileName()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        return new ResponseEntity<>(photos, HttpStatus.OK);
+//    }
 
     //collecter tous les photos
-    @GetMapping("/all")
-    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception {
-        List<Photo> photos = photoRepository.findAll();
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception {
+//        List<Photo> photos = photoRepository.findAll();
+//
+//        photos.forEach((photo) ->
+//        {
+//            try {
+//                Files.readAllBytes(Paths.get(context.getRealPath("webapp/Images") + photo.getFileName()));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        return new ResponseEntity<>(photos, HttpStatus.OK);
+//    }
 
-        photos.forEach((photo) ->
-        {
-            try {
-                Files.readAllBytes(Paths.get(context.getRealPath("/Images") + photo.getFileName()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+    @GetMapping("/find/{id}")
+    public byte[] getPhoto(@PathVariable("id") Long id) throws Exception{
+        Photo photo = photoRepository.findById(id).get();
+        return Files.readAllBytes(Paths.get(context.getRealPath("/Images/")+photo.getFileName()));
+    }
 
-        return new ResponseEntity<>(photos, HttpStatus.OK);
+    @GetMapping("/get/{id}/bycentre/{idCentre}")
+    public byte[] getPhotoByIdCentre(@PathVariable("id") Long id, @PathVariable("idCentre") Long idCentre) throws IOException {
+        centreRepository.findById(idCentre)
+                .orElseThrow(() -> new HydroLifeException("centre with id " + idCentre + " was not found"));
+
+        Photo photo = photoRepository.findById(id).get();
+
+        if(photo.getIdCentre() == idCentre){
+            return Files.readAllBytes(Paths.get(context.getRealPath("/Images/")+photo.getFileName()));
+        }else{
+            return null;
+        }
     }
 
 }
