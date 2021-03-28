@@ -88,41 +88,22 @@ public class PhotoController {
     }
 
     //collecter les photos d'un centre
-//    @GetMapping("/findbycentre/{id}")
-//    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception {
-//        centreRepository.findById(id)
-//                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
-//        List<Photo> photos = photoRepository.findByIdCentre(id);
-//
-//        photos.forEach((photo) ->
-//        {
-//            try {
-//                Files.readAllBytes(Paths.get(context.getRealPath("webapp/Images") + photo.getFileName()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        return new ResponseEntity<>(photos, HttpStatus.OK);
-//    }
+    @GetMapping("/findbycentre/{id}")
+    public ResponseEntity<List<Photo>> getPhotosByIdCentre(@PathVariable("id") Long id) throws Exception {
+        centreRepository.findById(id)
+                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " was not found"));
+        List<Photo> photos = photoRepository.findByIdCentre(id);
+        return new ResponseEntity<>(photos, HttpStatus.OK);
+    }
 
     //collecter tous les photos
-//    @GetMapping("/all")
-//    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception {
-//        List<Photo> photos = photoRepository.findAll();
-//
-//        photos.forEach((photo) ->
-//        {
-//            try {
-//                Files.readAllBytes(Paths.get(context.getRealPath("webapp/Images") + photo.getFileName()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        return new ResponseEntity<>(photos, HttpStatus.OK);
-//    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Photo>> getAllPhotos() throws Exception {
+        List<Photo> photos = photoRepository.findAll();
+        return new ResponseEntity<>(photos, HttpStatus.OK);
+    }
 
+    //only for the pic itself
     @GetMapping("/find/{id}")
     public byte[] getPhoto(@PathVariable("id") Long id) throws Exception{
         Photo photo = photoRepository.findById(id).get();
