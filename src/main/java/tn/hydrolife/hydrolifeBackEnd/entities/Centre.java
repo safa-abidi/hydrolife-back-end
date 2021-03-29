@@ -19,6 +19,7 @@ import java.util.Set;
 @Entity
 public class Centre extends User {
     private String description;
+    private String profilePic;
 
     //relations
     @OneToMany(cascade = CascadeType.ALL)

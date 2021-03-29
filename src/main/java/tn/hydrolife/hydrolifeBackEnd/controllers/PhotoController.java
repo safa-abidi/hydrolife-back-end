@@ -42,7 +42,7 @@ public class PhotoController {
     CentreRepository centreRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<Photo> createDocument(@RequestParam("file") MultipartFile file,
+    public ResponseEntity<Photo> addPhoto(@RequestParam("file") MultipartFile file,
                                                 @RequestParam("photo") String photo) throws JsonParseException, JsonMappingException, Exception {
         Photo photoo = new ObjectMapper().readValue(photo, Photo.class);
         boolean isExit = new File(context.getRealPath("/Images/")).exists();

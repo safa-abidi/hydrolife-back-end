@@ -16,13 +16,11 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_photo;
 
-    //POUR LE CENTRE
     private String titre_photo;
     private String description;
 
     private Long idCentre;
 
-    //***POUR LE LOGIC***//
     private String fileName;
 
     //relations
