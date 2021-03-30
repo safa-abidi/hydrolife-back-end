@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Data
@@ -33,8 +31,4 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "id_service")
     private Services service;
-
-//    @ManyToOne
-//    @JoinColumn(name = "id_client") //foreign key
-//    private Client client;
 }

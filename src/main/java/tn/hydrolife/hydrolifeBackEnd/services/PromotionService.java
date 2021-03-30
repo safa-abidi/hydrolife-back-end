@@ -41,10 +41,11 @@ public class PromotionService {
 
         Set<Services> currentCentreServices = currentCentre.get().getServices();
 
-        currentCentreServices.forEach((service) -> {
-            service.setIdPromo(promotion.getId_promo());
-            promotion.getServices().add(service);
-        });
+        if(!currentCentreServices.isEmpty()){
+            currentCentreServices.forEach((service) -> {
+                promotion.getServices().add(service);
+            });
+        }
 
         //add the promotion to logged centre
         currentCentre.get().getPromotions().add(promotion);
@@ -62,21 +63,19 @@ public class PromotionService {
     public Promotion updatePromotion(Promotion promotion) {
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
         promotion.setIdCentre(currentCentre.get().getId());
+        Set<Services> currentCentreServices = currentCentre.get().getServices();
+
+        if(!currentCentreServices.isEmpty()){
+            currentCentreServices.forEach((service) -> {
+                promotion.getServices().add(service);
+            });
+        }
+
         return promotionRepository.save(promotion);
     }
 
     //supprimer par id
     public void deletePromotion(Long id) {
-
-        //getting the logged centre
-        Optional<Centre> currentCentre = centreService.getCurrentCentre();
-
-        //getting his id
-        Long IdCentre = currentCentre.get().getId();
-
-        Set<Services> currentCentreServices = currentCentre.get().getServices();
-        currentCentreServices.forEach((service) -> service.setIdPromo(null));
-
         promotionRepository.deleteById(id);
     }
 

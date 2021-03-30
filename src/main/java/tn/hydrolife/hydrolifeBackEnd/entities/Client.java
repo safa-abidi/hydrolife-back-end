@@ -24,5 +24,5 @@ public class Client extends User {
 
     //relations
     @OneToMany(cascade = CascadeType.ALL)
-    Set<Reservation> reservations = new HashSet<Reservation>();
+    Set<Reservation> reservations = new HashSet<>();
 }

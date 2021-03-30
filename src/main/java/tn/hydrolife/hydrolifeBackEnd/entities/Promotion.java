@@ -28,10 +28,7 @@ public class Promotion {
     private Long idCentre;
 
     //relations
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     Set<Services> services = new HashSet<>();
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_centre") //foreign key
-//    private Centre centre;
 }

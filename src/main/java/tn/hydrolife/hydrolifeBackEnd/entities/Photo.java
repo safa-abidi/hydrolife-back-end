@@ -23,8 +23,4 @@ public class Photo {
 
     private String fileName;
 
-    //relations
-//    @ManyToOne
-//    @JoinColumn(name = "id_centre") //foreign key
-//    private Centre centre;
 }

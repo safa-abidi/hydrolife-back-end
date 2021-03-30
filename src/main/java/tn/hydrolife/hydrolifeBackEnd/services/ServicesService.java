@@ -31,10 +31,6 @@ public class ServicesService {
         service.setIdCentre(currentCentre.get().getId());
         currentCentre.get().getServices().add(service);
 
-        if (!currentCentre.get().getPromotions().isEmpty()) {
-            service.setIdPromo(currentCentre.get().getPromotions().stream().iterator().next().getId_promo());
-        }
-
         return servicesRepository.save(service);
     }
 
