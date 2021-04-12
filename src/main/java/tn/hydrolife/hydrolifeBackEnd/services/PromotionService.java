@@ -89,7 +89,7 @@ public class PromotionService {
     public List<Promotion> findPromotionByCentre(Long id) {
 
         Centre centre = centreRepository.findById(id)
-                .orElseThrow(() -> new HydroLifeException("centre was with id " + id + " not found"));
+                .orElseThrow(() -> new HydroLifeException("centre with id " + id + " not found"));
         return promotionRepository.findByIdCentre(id);
     }
 

@@ -3,5 +3,13 @@ package tn.hydrolife.hydrolifeBackEnd.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tn.hydrolife.hydrolifeBackEnd.entities.Reservation;
 
+import java.util.List;
+
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
+    //recupere les reservations d'un client donné par id
+    List<Reservation> findByIdClient(Long id);
+
+    //recupere les reservations d'un centre donné par id
+    List<Reservation> findByIdCentre(Long id);
 }

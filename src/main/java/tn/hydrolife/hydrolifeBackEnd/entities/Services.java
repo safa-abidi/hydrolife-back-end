@@ -24,7 +24,7 @@ public class Services {
 
     private Long idCentre;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     Set<Reservation> reservations = new HashSet<>();
 
 

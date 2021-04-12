@@ -29,7 +29,7 @@ public class ServicesController {
     @GetMapping("/find/{id}")
     public ResponseEntity<Services> getServiceById(@PathVariable("id") Long id) {
         Services service = servicesService.findService(id);
-        return new ResponseEntity<Services>(service, HttpStatus.OK);
+        return new ResponseEntity<>(service, HttpStatus.OK);
     }
 
     //ajouter un service

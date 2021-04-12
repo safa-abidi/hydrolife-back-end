@@ -3,6 +3,7 @@ package tn.hydrolife.hydrolifeBackEnd.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,13 +23,15 @@ public class Reservation {
     private int nbre_personnes_res;
 
     private Long idClient;
+    private Long idCentre;
+    private Long idService;
 
-    //relations
-    @ManyToOne
-    @JoinColumn(name = "id_centre") //foreign key
-    private Centre centre;
-
-    @ManyToOne
-    @JoinColumn(name = "id_service")
-    private Services service;
+//    //relations
+//    @ManyToOne
+//    @JoinColumn(name = "id_centre") //foreign key
+//    private Centre centre;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "id_service")
+//    private Services service;
 }
