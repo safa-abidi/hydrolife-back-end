@@ -56,9 +56,12 @@ public class ReservationController {
     ) {
         //set the service id in reservation
         reservation.setIdService(idService);
+
         //get that service and set its centre id in reservation
         Services service = servicesService.findService(idService);
-        reservation.setIdCentre(service.getIdCentre());
+
+        Centre centre = centreService.findCentre(service.getIdCentre());
+        reservation.setIdCentre(centre.getId());
 
         //get current logged client
         Optional<Client> currentClient = clientService.getCurrentClient();
@@ -74,7 +77,6 @@ public class ReservationController {
         service.getReservations().add(reservation);
 
         //ajouter la reservation à ce centre
-        Centre centre = centreService.findCentre(service.getIdCentre());
         centre.getReservations().add(reservation);
 
         reservationRepository.save(reservation);

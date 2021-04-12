@@ -48,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/promotion/**").permitAll()
 
                 .antMatchers("/api/photo/**").permitAll()
+
+                .antMatchers("/api/reservation/**").permitAll()
                 .anyRequest().authenticated() //for any request it needs authentication
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //don't manage sessions, bcz i'm using Json Web Tokens

@@ -28,7 +28,7 @@ public class PromotionService {
         this.servicesService = servicesService;
     }
 
-    //ajouter une promotion //big mess XD
+    //ajouter une promotion
     public Promotion addPromotion(Promotion promotion) {
         //getting the logged centre
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
