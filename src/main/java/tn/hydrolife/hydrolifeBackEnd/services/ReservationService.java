@@ -27,7 +27,7 @@ public class ReservationService {
         this.clientService = clientService;
         this.centreRepository = centreRepository;
     }
-    //ajouter reservation
+    //ajouter reservation : dans controller
 
     //recuperer tous les reservations
     public List<Reservation> findAllReservations(){

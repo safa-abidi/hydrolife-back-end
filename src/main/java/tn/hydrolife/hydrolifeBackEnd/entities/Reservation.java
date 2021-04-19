@@ -26,6 +26,8 @@ public class Reservation {
     private Long idCentre;
     private Long idService;
 
+    private double montant = 0;
+
 //    //relations
 //    @ManyToOne
 //    @JoinColumn(name = "id_centre") //foreign key

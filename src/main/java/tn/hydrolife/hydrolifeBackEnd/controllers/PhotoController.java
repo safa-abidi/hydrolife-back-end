@@ -1,7 +1,5 @@
 package tn.hydrolife.hydrolifeBackEnd.controllers;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +42,12 @@ public class PhotoController {
     public ResponseEntity<Photo> addPhoto(@RequestParam("file") MultipartFile file,
                                                 @RequestParam("photo") String photo) throws Exception {
         Photo photoo = new ObjectMapper().readValue(photo, Photo.class);
+
         boolean isExit = new File(context.getRealPath("/Images/")).exists();
         if (!isExit) {
             new File(context.getRealPath("webapp/Images/")).mkdir();
         }
+
         String filename = file.getOriginalFilename();
         String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
         File serverFile = new File(context.getRealPath("/Images/" + File.separator + newFileName));
@@ -102,7 +102,7 @@ public class PhotoController {
         return new ResponseEntity<>(photos, HttpStatus.OK);
     }
 
-    //only for the pic itself
+    //****only for the pic itself****
     @GetMapping("/find/{id}")
     public byte[] getPhoto(@PathVariable("id") Long id) throws Exception{
         Photo photo = photoRepository.findById(id).get();

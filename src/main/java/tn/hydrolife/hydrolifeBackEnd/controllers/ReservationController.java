@@ -3,10 +3,7 @@ package tn.hydrolife.hydrolifeBackEnd.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
-import tn.hydrolife.hydrolifeBackEnd.entities.Client;
-import tn.hydrolife.hydrolifeBackEnd.entities.Reservation;
-import tn.hydrolife.hydrolifeBackEnd.entities.Services;
+import tn.hydrolife.hydrolifeBackEnd.entities.*;
 import tn.hydrolife.hydrolifeBackEnd.repositories.ReservationRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
 import tn.hydrolife.hydrolifeBackEnd.services.ClientService;
@@ -15,6 +12,7 @@ import tn.hydrolife.hydrolifeBackEnd.services.ServicesService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/reservation")
@@ -78,6 +76,26 @@ public class ReservationController {
 
         //ajouter la reservation à ce centre
         centre.getReservations().add(reservation);
+
+        //oumour flous
+        //tarif mabda2iyan (sec maghir promotionet)
+        double tarif = service.getPrix_service() * reservation.getNbre_personnes_res();
+        reservation.setMontant(tarif);
+
+        //ken fama promotion BANGA XD
+        //collect them that centers promotions fi lista
+        Set<Promotion> promotions = centre.getPromotions();
+
+        promotions.forEach((promotion)-> promotion.getServices()
+                                            .forEach((serv)->
+                                            {
+                                                if (serv.getId_service() == reservation.getIdService()){
+                                                    double pourcentage = promotion.getPourcentage();
+                                                    double flous = reservation.getMontant()
+                                                            - ( (reservation.getMontant() * pourcentage) / 100);
+                                                    reservation.setMontant(flous);
+                                                }
+                                            }));
 
         reservationRepository.save(reservation);
         return new ResponseEntity<>(reservation, HttpStatus.CREATED);
