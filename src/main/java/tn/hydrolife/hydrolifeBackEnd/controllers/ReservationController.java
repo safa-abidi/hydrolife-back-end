@@ -78,12 +78,12 @@ public class ReservationController {
         centre.getReservations().add(reservation);
 
         //oumour flous
-        //tarif mabda2iyan (sec maghir promotionet)
+        //tarif mabda2iyan (sec, maghir promotionet)
         double tarif = service.getPrix_service() * reservation.getNbre_personnes_res();
         reservation.setMontant(tarif);
 
         //ken fama promotion BANGA XD
-        //collect them that centers promotions fi lista
+        //collect that centers promotions fi lista
         Set<Promotion> promotions = centre.getPromotions();
 
         promotions.forEach((promotion)-> promotion.getServices()

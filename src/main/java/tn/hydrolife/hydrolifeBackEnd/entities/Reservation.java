@@ -19,7 +19,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_res;
     private Date date_debut_res;
-    private Date date_fin_res;
+
     private int nbre_personnes_res;
 
     private Long idClient;
