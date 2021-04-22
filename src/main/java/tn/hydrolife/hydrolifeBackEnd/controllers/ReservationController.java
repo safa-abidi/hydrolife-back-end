@@ -10,9 +10,8 @@ import tn.hydrolife.hydrolifeBackEnd.services.ClientService;
 import tn.hydrolife.hydrolifeBackEnd.services.ReservationService;
 import tn.hydrolife.hydrolifeBackEnd.services.ServicesService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/reservation")
@@ -89,7 +88,9 @@ public class ReservationController {
         promotions.forEach((promotion)-> promotion.getServices()
                                             .forEach((serv)->
                                             {
-                                                if (serv.getId_service() == reservation.getIdService()){
+                                                if ((serv.getId_service() == reservation.getIdService())
+                                                && (!promotion.getDate_debut_promo().after(reservation.getDate_res())
+                                                        && !promotion.getDate_fin_promo().before(reservation.getDate_res()))){
                                                     double pourcentage = promotion.getPourcentage();
                                                     double flous = reservation.getMontant()
                                                             - ( (reservation.getMontant() * pourcentage) / 100);
@@ -115,6 +116,8 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //AFFICHAGE DES RESERVATIONS
+
     //collecter les reservations d'un meme client par son id
     @GetMapping("/findbyclient/{id}")
     public ResponseEntity<List<Reservation>> getReservationsByIdClient(@PathVariable("id") Long id){
@@ -128,4 +131,29 @@ public class ReservationController {
         List<Reservation> reservations = reservationService.findReservationByCentre(id);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+
+
+    //historique des reservations du client
+//    @GetMapping("historiqueClient/{id}")
+//    public ResponseEntity<List<Reservation>> getHistoriqueByIdClient(@PathVariable("id") Long id){
+//        List<Reservation> reservations = reservationService.findReservationByClient(id);
+//
+//        List<Reservation> historique = null;
+//
+//        Date date = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        formatter.format(date);
+//
+//        reservations.stream()
+//                .filter(reservation -> reservation.getDate_res().before(date))
+//                .sorted()
+//                .forEach(reservation -> historique.add(reservation));
+//
+//        if (historique != null) {
+//            return new ResponseEntity<>(historique, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//    }
 }
