@@ -23,8 +23,12 @@ public class Reservation {
     private int nbre_personnes_res;
 
     private Long idClient;
+    private String nomClient;
+    private String prenomClient;
+
     private Long idCentre;
     private Long idService;
+    private String nomService;
 
     private double montant = 0;
 
