@@ -24,8 +24,8 @@ public class Centre extends User {
     @OneToMany(cascade = CascadeType.ALL)
     Set<Services> services = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    Set<Reservation> reservations = new HashSet<>();
+//    @OneToMany(cascade = CascadeType.ALL)
+//    Set<Reservation> reservations = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     Set<Photo> photos = new HashSet<>();

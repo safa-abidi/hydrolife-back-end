@@ -3,7 +3,6 @@ package tn.hydrolife.hydrolifeBackEnd.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,6 +28,10 @@ public class Reservation {
     private Long idCentre;
     private Long idService;
     private String nomService;
+
+    private Long idPromo = null;
+    private double pourcentagePromo = 0;
+    private String nomPromo = null;
 
     private double montant = 0;
 

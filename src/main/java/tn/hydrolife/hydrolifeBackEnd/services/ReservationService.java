@@ -38,6 +38,9 @@ public class ReservationService {
     public Reservation updateReservation(Reservation reservation){
         Optional<Client> currentClient = clientService.getCurrentClient();
         reservation.setIdClient(currentClient.get().getId());
+        reservation.setPrenomClient(currentClient.get().getPrenom());
+        reservation.setNomClient(currentClient.get().getNom());
+        reservation.setIdService(reservation.getIdService());
         return reservationRepository.save(reservation);
     }
 

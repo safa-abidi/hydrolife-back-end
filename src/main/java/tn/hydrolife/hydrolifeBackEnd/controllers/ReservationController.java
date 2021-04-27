@@ -79,14 +79,14 @@ public class ReservationController {
         service.getReservations().add(reservation);
 
         //ajouter la reservation à ce centre
-        centre.getReservations().add(reservation);
+        //centre.getReservations().add(reservation);
 
         //oumour flous
         //tarif mabda2iyan (sec, maghir promotionet)
         double tarif = service.getPrix_service() * reservation.getNbre_personnes_res();
         reservation.setMontant(tarif);
 
-        //ken fama promotion BANGA XD
+        //ken fama promotion
         //collect that centers promotions fi lista
         Set<Promotion> promotions = centre.getPromotions();
 
@@ -100,6 +100,9 @@ public class ReservationController {
                                                     double flous = reservation.getMontant()
                                                             - ( (reservation.getMontant() * pourcentage) / 100);
                                                     reservation.setMontant(flous);
+                                                    reservation.setIdPromo(promotion.getId_promo());
+                                                    reservation.setNomPromo(promotion.getTitre_promo());
+                                                    reservation.setPourcentagePromo(promotion.getPourcentage());
                                                 }
                                             }));
 
@@ -108,8 +111,43 @@ public class ReservationController {
 
     }
     //modifier une reservation
-    @PutMapping("/update")
-    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation){
+    @PutMapping("/{idService}/update")
+    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation,
+                                                         @PathVariable("idService") Long idService){
+
+        //set the service id in reservation
+        reservation.setIdService(idService);
+
+        //get that service and set its centre id in reservation
+        Services service = servicesService.findService(idService);
+
+        reservation.setNomService(service.getLibelle_service());
+
+        Centre centre = centreService.findCentre(service.getIdCentre());
+        reservation.setIdCentre(centre.getId());
+
+        //montant
+        double tarif = service.getPrix_service() * reservation.getNbre_personnes_res();
+        reservation.setMontant(tarif);
+        //promotions stuff
+        Set<Promotion> promotions = centre.getPromotions();
+
+        promotions.forEach((promotion)-> promotion.getServices()
+                .forEach((serv)->
+                {
+                    if ((serv.getId_service() == reservation.getIdService())
+                            && (!promotion.getDate_debut_promo().after(reservation.getDate_res())
+                            && !promotion.getDate_fin_promo().before(reservation.getDate_res()))){
+                        double pourcentage = promotion.getPourcentage();
+                        double flous = reservation.getMontant()
+                                - ( (reservation.getMontant() * pourcentage) / 100);
+                        reservation.setMontant(flous);
+                        reservation.setIdPromo(promotion.getId_promo());
+                        reservation.setNomPromo(promotion.getTitre_promo());
+                        reservation.setPourcentagePromo(promotion.getPourcentage());
+                    }
+                }));
+
         Reservation updateReservation = reservationService.updateReservation(reservation);
         return new ResponseEntity<>(updateReservation, HttpStatus.OK);
     }
