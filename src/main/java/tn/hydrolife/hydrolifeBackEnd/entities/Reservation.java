@@ -29,9 +29,7 @@ public class Reservation {
     private Long idService;
     private String nomService;
 
-    private Long idPromo = null;
-    private double pourcentagePromo = 0;
-    private String nomPromo = null;
+    private double pourcentagePromo;
 
     private double montant = 0;
 

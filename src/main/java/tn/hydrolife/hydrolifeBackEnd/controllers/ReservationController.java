@@ -100,8 +100,6 @@ public class ReservationController {
                                                     double flous = reservation.getMontant()
                                                             - ( (reservation.getMontant() * pourcentage) / 100);
                                                     reservation.setMontant(flous);
-                                                    reservation.setIdPromo(promotion.getId_promo());
-                                                    reservation.setNomPromo(promotion.getTitre_promo());
                                                     reservation.setPourcentagePromo(promotion.getPourcentage());
                                                 }
                                             }));
@@ -142,8 +140,6 @@ public class ReservationController {
                         double flous = reservation.getMontant()
                                 - ( (reservation.getMontant() * pourcentage) / 100);
                         reservation.setMontant(flous);
-                        reservation.setIdPromo(promotion.getId_promo());
-                        reservation.setNomPromo(promotion.getTitre_promo());
                         reservation.setPourcentagePromo(promotion.getPourcentage());
                     }
                 }));
