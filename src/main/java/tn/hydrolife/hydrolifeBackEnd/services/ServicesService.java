@@ -25,15 +25,6 @@ public class ServicesService {
         this.centreRepository = centreRepository;
     }
 
-    //ajouter un service
-    public Services addService(Services service) {
-        Optional<Centre> currentCentre = centreService.getCurrentCentre();
-        service.setIdCentre(currentCentre.get().getId());
-        currentCentre.get().getServices().add(service);
-
-        return servicesRepository.save(service);
-    }
-
     //trouver tous les services
     public List<Services> findAllServices() {
         return servicesRepository.findAll();

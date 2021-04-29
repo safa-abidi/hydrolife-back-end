@@ -39,8 +39,9 @@ public class PhotoController {
     CentreRepository centreRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<Photo> addPhoto(@RequestParam("file") MultipartFile file,
-                                                @RequestParam("photo") String photo) throws Exception {
+    public ResponseEntity<Photo> addPhoto(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("photo") String photo) throws Exception {
         Photo photoo = new ObjectMapper().readValue(photo, Photo.class);
 
         boolean isExit = new File(context.getRealPath("/Images/")).exists();

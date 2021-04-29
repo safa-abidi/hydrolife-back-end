@@ -21,6 +21,7 @@ public class Services {
     private String libelle_service;
     private String description_service;
     private double prix_service;
+    private String fileName;
 
     private Long idCentre;
 

@@ -10,7 +10,6 @@ import tn.hydrolife.hydrolifeBackEnd.services.ClientService;
 import tn.hydrolife.hydrolifeBackEnd.services.ReservationService;
 import tn.hydrolife.hydrolifeBackEnd.services.ServicesService;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -94,8 +93,8 @@ public class ReservationController {
                                             .forEach((serv)->
                                             {
                                                 if ((serv.getId_service() == reservation.getIdService())
-                                                && (!promotion.getDate_debut_promo().after(reservation.getDate_res())
-                                                        && !promotion.getDate_fin_promo().before(reservation.getDate_res()))){
+                                                && (!promotion.getDate_debut_promo().after(reservation.getDateRes())
+                                                        && !promotion.getDate_fin_promo().before(reservation.getDateRes()))){
                                                     double pourcentage = promotion.getPourcentage();
                                                     double flous = reservation.getMontant()
                                                             - ( (reservation.getMontant() * pourcentage) / 100);
@@ -134,8 +133,8 @@ public class ReservationController {
                 .forEach((serv)->
                 {
                     if ((serv.getId_service() == reservation.getIdService())
-                            && (!promotion.getDate_debut_promo().after(reservation.getDate_res())
-                            && !promotion.getDate_fin_promo().before(reservation.getDate_res()))){
+                            && (!promotion.getDate_debut_promo().after(reservation.getDateRes())
+                            && !promotion.getDate_fin_promo().before(reservation.getDateRes()))){
                         double pourcentage = promotion.getPourcentage();
                         double flous = reservation.getMontant()
                                 - ( (reservation.getMontant() * pourcentage) / 100);
@@ -171,8 +170,41 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+    //OMGGGGGGGGG
+    //CLIENT
+    //collecter les reservations anciennes d'un meme client par son id
+    @GetMapping("/historiqueClient/{idClient}")
+    public ResponseEntity<List<Reservation>> getReservationsHistoryByIdClient(@PathVariable("idClient") Long idClient){
+        Date date = new Date();
+        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResBefore(idClient, date);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+    //collecter les reservations a venir d'un meme client par son id
+    @GetMapping("/aVenirClient/{idClient}")
+    public ResponseEntity<List<Reservation>> getUpcomingReservationsByIdClient(@PathVariable("idClient") Long idClient){
+        Date date = new Date();
+        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResAfter(idClient, date);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
 
-    //historique des reservations du client
+    //CENTRE
+    //collecter les reservations anciennes d'un meme centre par son id
+    @GetMapping("/historiqueCentre/{idCentre}")
+    public ResponseEntity<List<Reservation>> getReservationsHistoryByIdCentre(@PathVariable("idCentre") Long idCentre){
+        Date date = new Date();
+        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResBefore(idCentre, date);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+    //collecter les reservations a venir d'un meme centre par son id
+    @GetMapping("/aVenirCentre/{idCentre}")
+    public ResponseEntity<List<Reservation>> getUpcomingReservationsByIdCentre(@PathVariable("idCentre") Long idCentre){
+        Date date = new Date();
+        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResAfter(idCentre, date);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+
+//    historique des reservations du client
 //    @GetMapping("historiqueClient/{id}")
 //    public ResponseEntity<List<Reservation>> getHistoriqueByIdClient(@PathVariable("id") Long id){
 //        List<Reservation> reservations = reservationService.findReservationByClient(id);
