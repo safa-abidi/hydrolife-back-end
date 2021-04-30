@@ -15,15 +15,15 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByIdCentre(Long id);
 
     //historique client
-    List<Reservation> findByIdClientAndDateResBefore(Long id, Date d);
+    List<Reservation> findByIdClientAndDateResBeforeOrderByDateResDesc(Long id, Date d);
 
     //Reservation a venir client
-    List<Reservation> findByIdClientAndDateResAfter(Long id, Date d);
+    List<Reservation> findByIdClientAndDateResAfterOrderByDateRes(Long id, Date d);
 
     //historique centre
-    List<Reservation> findByIdCentreAndDateResBefore(Long id, Date d);
+    List<Reservation> findByIdCentreAndDateResBeforeOrderByDateResDesc(Long id, Date d);
 
     //Reservation a venir centre
-    List<Reservation> findByIdCentreAndDateResAfter(Long id, Date d);
+    List<Reservation> findByIdCentreAndDateResAfterOrderByDateRes(Long id, Date d);
 
 }

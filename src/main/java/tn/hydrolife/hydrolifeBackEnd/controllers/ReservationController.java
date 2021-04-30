@@ -176,14 +176,14 @@ public class ReservationController {
     @GetMapping("/historiqueClient/{idClient}")
     public ResponseEntity<List<Reservation>> getReservationsHistoryByIdClient(@PathVariable("idClient") Long idClient){
         Date date = new Date();
-        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResBefore(idClient, date);
+        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResBeforeOrderByDateResDesc(idClient, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
     //collecter les reservations a venir d'un meme client par son id
     @GetMapping("/aVenirClient/{idClient}")
     public ResponseEntity<List<Reservation>> getUpcomingReservationsByIdClient(@PathVariable("idClient") Long idClient){
         Date date = new Date();
-        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResAfter(idClient, date);
+        List<Reservation> reservations = reservationRepository.findByIdClientAndDateResAfterOrderByDateRes(idClient, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
@@ -192,14 +192,14 @@ public class ReservationController {
     @GetMapping("/historiqueCentre/{idCentre}")
     public ResponseEntity<List<Reservation>> getReservationsHistoryByIdCentre(@PathVariable("idCentre") Long idCentre){
         Date date = new Date();
-        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResBefore(idCentre, date);
+        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResBeforeOrderByDateResDesc(idCentre, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
     //collecter les reservations a venir d'un meme centre par son id
     @GetMapping("/aVenirCentre/{idCentre}")
     public ResponseEntity<List<Reservation>> getUpcomingReservationsByIdCentre(@PathVariable("idCentre") Long idCentre){
         Date date = new Date();
-        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResAfter(idCentre, date);
+        List<Reservation> reservations = reservationRepository.findByIdCentreAndDateResAfterOrderByDateRes(idCentre, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
