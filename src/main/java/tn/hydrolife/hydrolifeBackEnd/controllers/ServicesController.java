@@ -121,4 +121,11 @@ public class ServicesController {
         }
 
     }
+
+    //rechercher les services par libelle
+    @GetMapping("/rechercher")
+        public ResponseEntity<List<Services>> getByLibelle(@RequestParam("mot") String mot){
+            List<Services> services = servicesService.findServicesByLibelleOrDescription(mot, mot);
+            return new ResponseEntity<>(services, HttpStatus.OK);
+        }
 }

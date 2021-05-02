@@ -55,4 +55,9 @@ public class ServicesService {
         return servicesRepository.findByIdCentre(id);
     }
 
+    //rechercher par libelle service
+    public List<Services> findServicesByLibelleOrDescription(String libelle, String description){
+        return servicesRepository.findByLibelleOrDescription(libelle, description);
+    }
+
 }

@@ -10,9 +10,11 @@ import java.util.Optional;
 public interface CentreRepository extends JpaRepository<Centre, Long> {
     Optional<Centre> findByEmail(String email);
 
+    //pour la carte (map)
     @Query(value = "SELECT adresse FROM User u WHERE u.role ='CENTRE'", nativeQuery = true)
     List<String> findAllAdresses();
 
+    //pour la recherche
     @Query("select c from Centre c where nom like %?1% or adresse like %?2%")
     List<Centre> findByNomOrAdresse(String nom, String adresse);
 }
