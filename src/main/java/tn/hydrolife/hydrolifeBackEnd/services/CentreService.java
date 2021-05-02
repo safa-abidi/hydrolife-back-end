@@ -61,4 +61,9 @@ public class CentreService {
                 getContext().getAuthentication().getPrincipal();
         return centreRepository.findByEmail(principal.getUsername());
     }
+
+    //rechercher par nom ou adresse
+    public List<Centre> findCentresByNomOrAdresse(String nom, String adresse){
+        return centreRepository.findByNomOrAdresse(nom, adresse);
+    }
 }

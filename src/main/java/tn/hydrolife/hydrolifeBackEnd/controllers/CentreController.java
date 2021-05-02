@@ -82,4 +82,11 @@ public class CentreController {
         List<String> adresses = centreRepository.findAllAdresses();
         return new ResponseEntity<>(adresses, HttpStatus.OK);
     }
+
+    //rechercher par nom ou adresse
+    @GetMapping("/search/{mot}")
+    public ResponseEntity<List<Centre>> getByNameOrAdresse(@PathVariable("mot") String mot){
+        List<Centre> centres = centreService.findCentresByNomOrAdresse(mot, mot);
+        return new ResponseEntity<>(centres,HttpStatus.OK);
+    }
 }

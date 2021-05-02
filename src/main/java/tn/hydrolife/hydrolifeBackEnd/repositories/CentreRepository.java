@@ -12,4 +12,7 @@ public interface CentreRepository extends JpaRepository<Centre, Long> {
 
     @Query(value = "SELECT adresse FROM User u WHERE u.role ='CENTRE'", nativeQuery = true)
     List<String> findAllAdresses();
+
+    @Query("select c from Centre c where nom like %?1% or adresse like %?2%")
+    List<Centre> findByNomOrAdresse(String nom, String adresse);
 }
