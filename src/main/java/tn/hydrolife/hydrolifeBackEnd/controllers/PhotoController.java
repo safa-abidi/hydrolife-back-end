@@ -86,6 +86,12 @@ public class PhotoController {
         photoRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    //NEWWWW trouver une photo par son id
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<Optional<Photo>> getPhotoById(@PathVariable("id") Long id){
+        Optional<Photo> photo = photoRepository.findById(id);
+        return new ResponseEntity<>(photo, HttpStatus.OK);
+    }
 
     //collecter les photos d'un centre
     @GetMapping("/findbycentre/{id}")

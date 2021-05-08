@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.entities.Services;
-import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.ServicesRepository;
 import tn.hydrolife.hydrolifeBackEnd.services.CentreService;
 import tn.hydrolife.hydrolifeBackEnd.services.ServicesService;
