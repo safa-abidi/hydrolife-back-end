@@ -179,6 +179,14 @@ public class ReservationController {
         List<Reservation> reservations = reservationRepository.findByIdClientAndDateResBeforeOrderByDateResDesc(idClient, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+    //rechercher l historique des reservations dun client par son nom ou prenom
+    @GetMapping("/rechercherhistoriqueclient")
+    public ResponseEntity<List<Reservation>> findHisoryByNomOrPrenom(@RequestParam(required = false, defaultValue = "") String mot, @RequestParam(required = false, defaultValue = "") String mot2){
+        Date date = new Date();
+        List<Reservation> reservations = reservationRepository.findByNomClientOrPrenomClient(mot, mot2, date);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
     //collecter les reservations a venir d'un meme client par son id
     @GetMapping("/aVenirClient/{idClient}")
     public ResponseEntity<List<Reservation>> getUpcomingReservationsByIdClient(@PathVariable("idClient") Long idClient){

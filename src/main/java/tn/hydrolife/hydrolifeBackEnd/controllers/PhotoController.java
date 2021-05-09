@@ -88,8 +88,9 @@ public class PhotoController {
     }
     //NEWWWW trouver une photo par son id
     @GetMapping("/getbyid/{id}")
-    public ResponseEntity<Optional<Photo>> getPhotoById(@PathVariable("id") Long id){
-        Optional<Photo> photo = photoRepository.findById(id);
+    public ResponseEntity<Photo> getPhotoById(@PathVariable("id") Long id){
+        Photo photo = photoRepository.findById(id)
+                .orElseThrow(() -> new HydroLifeException("photo was not found"));
         return new ResponseEntity<>(photo, HttpStatus.OK);
     }
 

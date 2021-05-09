@@ -34,6 +34,12 @@ public class ServicesService {
     public Services updateService(Services service) {
         Optional<Centre> currentCentre = centreService.getCurrentCentre();
         service.setIdCentre(currentCentre.get().getId());
+
+        service.setPrix_service(service.getPrix_service());
+        service.setDescription_service(service.getDescription_service());
+        service.setLibelle_service(service.getLibelle_service());
+        service.setFileName(service.getFileName());
+
         return servicesRepository.save(service);
     }
 

@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
 import tn.hydrolife.hydrolifeBackEnd.entities.Client;
 import tn.hydrolife.hydrolifeBackEnd.entities.Reservation;
+import tn.hydrolife.hydrolifeBackEnd.entities.Services;
 import tn.hydrolife.hydrolifeBackEnd.exceptions.HydroLifeException;
 import tn.hydrolife.hydrolifeBackEnd.repositories.CentreRepository;
 import tn.hydrolife.hydrolifeBackEnd.repositories.ClientRepository;
 import tn.hydrolife.hydrolifeBackEnd.repositories.ReservationRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
