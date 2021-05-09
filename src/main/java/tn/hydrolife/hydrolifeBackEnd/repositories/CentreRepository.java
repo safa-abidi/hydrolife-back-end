@@ -1,5 +1,6 @@
 package tn.hydrolife.hydrolifeBackEnd.repositories;
 
+import com.sun.istack.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import tn.hydrolife.hydrolifeBackEnd.entities.Centre;
@@ -16,5 +17,5 @@ public interface CentreRepository extends JpaRepository<Centre, Long> {
 
     //pour la recherche
     @Query("select c from Centre c where nom like %?1% or adresse like %?2%")
-    List<Centre> findByNomOrAdresse(String nom, String adresse);
+    List<Centre> findByNomOrAdresse(@Nullable String nom, @Nullable String adresse);
 }
