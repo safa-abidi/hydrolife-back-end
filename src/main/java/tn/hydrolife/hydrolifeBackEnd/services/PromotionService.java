@@ -48,6 +48,7 @@ public class PromotionService {
         if(!currentCentreServices.isEmpty()){
             currentCentreServices.forEach((service) -> {
                 promotion.getServices().add(service);
+                service.setPourcentagePromo(promotion.getPourcentage());
             });
         }
 

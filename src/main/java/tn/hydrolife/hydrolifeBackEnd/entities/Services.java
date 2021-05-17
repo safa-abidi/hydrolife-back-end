@@ -24,6 +24,7 @@ public class Services {
     private String fileName;
 
     private Long idCentre;
+    private double pourcentagePromo = 0;
 
     @OneToMany(cascade = CascadeType.ALL)
     Set<Reservation> reservations = new HashSet<>();

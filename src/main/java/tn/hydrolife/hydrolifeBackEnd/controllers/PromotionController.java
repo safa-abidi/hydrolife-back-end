@@ -68,6 +68,7 @@ public class PromotionController {
         Services service = servicesService.findService(idService);
 
         promotion.getServices().add(service);
+        service.setPourcentagePromo(promotion.getPourcentage());
 
         //add the promotion to logged centre
         currentCentre.get().getPromotions().add(promotion);
