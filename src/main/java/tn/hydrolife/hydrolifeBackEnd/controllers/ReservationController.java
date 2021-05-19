@@ -181,9 +181,9 @@ public class ReservationController {
     }
     //rechercher l historique des reservations dun client par son nom ou prenom
     @GetMapping("/rechercherhistoriqueclient")
-    public ResponseEntity<List<Reservation>> findHisoryByNomOrPrenom(@RequestParam(required = false, defaultValue = "") String mot, @RequestParam(required = false, defaultValue = "") String mot2){
+    public ResponseEntity<List<Reservation>> findHisoryByNomOrPrenom(@RequestParam(required = false, defaultValue = "") String mot){
         Date date = new Date();
-        List<Reservation> reservations = reservationRepository.findByNomClientOrPrenomClient(mot, mot2, date);
+        List<Reservation> reservations = reservationRepository.findByNomClientOrPrenomClient(mot, mot, date);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
