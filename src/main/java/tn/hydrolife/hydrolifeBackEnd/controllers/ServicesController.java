@@ -123,8 +123,8 @@ public class ServicesController {
 
     //rechercher les services par libelle
     @GetMapping("/rechercher")
-        public ResponseEntity<List<Services>> getByLibelle(@RequestParam(required = false, defaultValue = "") String mot, @RequestParam(required = false, defaultValue = "") String mot2){
-            List<Services> services = servicesService.findServicesByLibelleOrDescription(mot, mot2);
+        public ResponseEntity<List<Services>> getByLibelle(@RequestParam(required = false, defaultValue = "") String mot){
+            List<Services> services = servicesService.findServicesByLibelleOrDescription(mot, mot);
             return new ResponseEntity<>(services, HttpStatus.OK);
         }
 }
